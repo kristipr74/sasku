@@ -1,32 +1,31 @@
-import { nanoid } from "nanoid";
+//import { nanoid } from "nanoid";
 import db from "../../db";
 import { User, NewUser } from "./interface";
+import hashService from "../../general/services/hahshService";
 
 const userService = {
   getAllUsers: () => {
     const { user } = db;
     return user;
   },
-  getUserById: (id: string): User | undefined => {
+  getUserById: (id: number): User | undefined => {
     const user: User | undefined = db.user.find(
       (element: User) => element.id === id
     );
     return user;
   },
-  createUser: (newUser: NewUser): string => {
-    const { userName, password, firstName, lastName, description, created } =
-      newUser;
-    const id = nanoid();
-    const user: User = {
+  getUserByEmail: (email: string): User | undefined => {
+    const user = db.user.find((element) => element.email === email);
+    return user;
+  },
+  createUser: async (newUser: NewUser) => {
+    const id = db.user.length + 1;
+    const hashedPassword = await hashService.hash(newUser.password);
+    db.user.push({
       id,
-      userName,
-      password,
-      firstName,
-      lastName,
-      description,
-      created,
-    };
-    db.user.push(user);
+      ...newUser,
+      password: hashedPassword,
+    });
     return id;
   },
 };

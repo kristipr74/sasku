@@ -29,46 +29,54 @@ import {
   createGame,
 } from "./components/game/controller";
 
+import authController from "./components/auth/Controller";
+
 import pingController from "./components/ping/controller";
+import resultService from "./components/result/service";
 
 const app: Application = express();
 
-const port: Number = 3100;
+const port: number = 3000;
+
+const responseCodes = {
+  ok: 200,
+  created: 201,
+  noContent: 204,
+  badRequest: 400,
+  notFound: 404,
+};
 
 //Midelware
 app.use(express.json());
 
 app.get("/ping", pingController);
 
-//Rout to get all results
+/* -------------- LOGIN -------------- */
+app.post("/login", authController.login);
+
+/* -------------- RESULT -------------- */
 app.get("/result", getAllResult);
-//Rout to get results by id
 app.get("/result/:id", getResultById);
-//Rout to create results
 app.post("/result", createResult);
-//Rout to get all players
+
+/* -------------- PLAYER -------------- */
 app.get("/player", getAllPlayers);
-//Rout to get player by id
 app.get("/player/:id", getPlayerById);
-//Rout to create Player
 app.post("/player", createPlayer);
-//Rout to get all users
+
+/* -------------- USER -------------- */
 app.get("/user", getAllUsers);
-//Route to get user by id
 app.get("/user/:id", getUserById);
-//Rout to create User
 app.post("/user", createUser);
-//Rout to get all groups
+
+/* -------------- GROUP -------------- */
 app.get("/group", getAllGroups);
-//Route to get group by id
 app.get("/group/:id", getGroupById);
-//Rout to create group
 app.post("/group", createGroup);
-//Rout to get all games
+
+/* -------------- GAME -------------- */
 app.get("/game", getAllGames);
-//Route to get games by id
 app.get("/game/:id", getGameById);
-//Rout to create game
 app.post("/game", createGame);
 
 app.listen(port, () => {
