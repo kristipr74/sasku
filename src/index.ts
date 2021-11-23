@@ -10,7 +10,8 @@ import gameRouter from "./components/game/routes";
 import groupRouter from "./components/group/routes";
 import resultRouter from "./components/result/routes";
 
-import {login } from './components/user/controller'
+import { login } from "./components/user/controller";
+import isLoggedIn from "./general/middlewares/isLoggedIn";
 
 const app: Application = express();
 
@@ -36,7 +37,7 @@ app.post("/login", login);
 app.use("/result", resultRouter);
 
 /* -------------- PLAYER -------------- */
-app.use("/player", playerRouter);
+app.use("/player", isLoggedIn, playerRouter);
 
 /* -------------- USER -------------- */
 app.use("/user", userRouter);
