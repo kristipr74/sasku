@@ -1,38 +1,16 @@
 import express, { Application } from "express";
 
-import {
-  getAllResult,
-  getResultById,
-  createResult,
-} from "./components/result/controller";
-
-import {
-  getAllPlayers,
-  getPlayerById,
-  createPlayer,
-} from "./components/player/controller";
-
-import {
-  getAllUsers,
-  getUserById,
-  createUser,
-} from "./components/user/controller";
-import {
-  getAllGroups,
-  getGroupById,
-  createGroup,
-} from "./components/group/controller";
-
-import {
-  getAllGames,
-  getGameById,
-  createGame,
-} from "./components/game/controller";
-
 import authController from "./components/auth/Controller";
 
 import pingController from "./components/ping/controller";
 import resultService from "./components/result/service";
+import playerRouter from "./components/player/routes";
+import userRouter from "./components/user/routes";
+import gameRouter from "./components/game/routes";
+import groupRouter from "./components/group/routes";
+import resultRouter from "./components/result/routes";
+
+import {login } from './components/user/controller'
 
 const app: Application = express();
 
@@ -52,32 +30,22 @@ app.use(express.json());
 app.get("/ping", pingController);
 
 /* -------------- LOGIN -------------- */
-app.post("/login", authController.login);
+app.post("/login", login);
 
 /* -------------- RESULT -------------- */
-app.get("/result", getAllResult);
-app.get("/result/:id", getResultById);
-app.post("/result", createResult);
+app.use("/result", resultRouter);
 
 /* -------------- PLAYER -------------- */
-app.get("/player", getAllPlayers);
-app.get("/player/:id", getPlayerById);
-app.post("/player", createPlayer);
+app.use("/player", playerRouter);
 
 /* -------------- USER -------------- */
-app.get("/user", getAllUsers);
-app.get("/user/:id", getUserById);
-app.post("/user", createUser);
+app.use("/user", userRouter);
 
 /* -------------- GROUP -------------- */
-app.get("/group", getAllGroups);
-app.get("/group/:id", getGroupById);
-app.post("/group", createGroup);
+app.use("/group", groupRouter);
 
 /* -------------- GAME -------------- */
-app.get("/game", getAllGames);
-app.get("/game/:id", getGameById);
-app.post("/game", createGame);
+app.use("/game", gameRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

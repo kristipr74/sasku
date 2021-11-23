@@ -6,7 +6,7 @@ const loginService = {
   login: async (email: string, password: string) => {
     const user = userService.getUserByEmail(email);
     if (!user) return false;
-    const match = await hashService.match(password, user.password);
+    const match = await hashService.compare(password, user.password);
     if (!match) return false;
     const token = await jwtService.sign(user);
     return token;

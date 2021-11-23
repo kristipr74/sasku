@@ -1,10 +1,9 @@
-//import { nanoid } from "nanoid";
 import db from "../../db";
 import { User, NewUser } from "./interface";
 import hashService from "../../general/services/hahshService";
 
 const userService = {
-  getAllUsers: () => {
+  getUsers: () => {
     const { user } = db;
     return user;
   },
@@ -18,7 +17,7 @@ const userService = {
     const user = db.user.find((element) => element.email === email);
     return user;
   },
-  createUser: async (newUser: NewUser) => {
+  createUser: async (newUser: NewUser):Promise<number> => {
     const id = db.user.length + 1;
     const hashedPassword = await hashService.hash(newUser.password);
     db.user.push({

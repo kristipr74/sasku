@@ -77,7 +77,7 @@ const db: Db = {
     {
       id: 1,
       userName: "KristiP",
-      password: "$2b$10$47H15GACD2jlVB4hlkKzPuw.FC9FeNDQmDrwLh0TXUaXwYKIJ359W",
+      password: "$2b$10$PXaNnUDAxKX44h16s6IFc.DodT5c9SF3Rw4T2LTDbp6xmlCFX6LZe",
       firstName: "Kristi",
       lastName: "Pruul",
       description: "Esimene kasutaja",
