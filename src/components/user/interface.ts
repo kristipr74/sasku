@@ -5,10 +5,22 @@ interface NewUser {
   lastName: string;
   description: string;
   created: string;
+  email: string;
+  role: "Admin" | "User";
 }
 
 interface User extends NewUser {
-  id: string;
+  id: number;
 }
 
-export { User, NewUser };
+interface UpdateUser {
+  id: number;
+  userName?: string;
+  password?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  role?: "Admin" | "User";
+}
+
+export { User, NewUser, UpdateUser };
