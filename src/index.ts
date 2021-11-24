@@ -3,7 +3,6 @@ import express, { Application } from "express";
 import authController from "./components/auth/Controller";
 
 import pingController from "./components/ping/controller";
-import resultService from "./components/result/service";
 import playerRouter from "./components/player/routes";
 import userRouter from "./components/user/routes";
 import gameRouter from "./components/game/routes";
@@ -15,15 +14,7 @@ import isLoggedIn from "./general/middlewares/isLoggedIn";
 
 const app: Application = express();
 
-const port: number = 3000;
-
-const responseCodes = {
-  ok: 200,
-  created: 201,
-  noContent: 204,
-  badRequest: 400,
-  notFound: 404,
-};
+const port: number = 3001;
 
 //Midelware
 app.use(express.json());
@@ -37,7 +28,8 @@ app.post("/login", login);
 app.use("/result", resultRouter);
 
 /* -------------- PLAYER -------------- */
-app.use("/player", isLoggedIn, playerRouter);
+app.use("/player", playerRouter);
+//app.use("/player", isLoggedIn, playerRouter);
 
 /* -------------- USER -------------- */
 app.use("/user", userRouter);

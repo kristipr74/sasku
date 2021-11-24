@@ -5,7 +5,12 @@ interface NewGroup {
 }
 
 interface Group extends NewGroup {
-  id: string;
+  id: number;
 }
 
-export { Group, NewGroup };
+interface UpdateGroup {
+  id: number;
+  name: string;
+}
+
+export { Group, NewGroup, UpdateGroup };

@@ -1,6 +1,5 @@
 interface NewPlayer {
-  firstName: string;
-  lastName: string;
+  name: string;
   telephone: number;
   email: string;
   messenger: string;
@@ -9,7 +8,16 @@ interface NewPlayer {
 }
 
 interface Player extends NewPlayer {
-  id: string;
+  id: number;
 }
 
-export { Player, NewPlayer };
+interface UpdatePlayer {
+  id: number;
+  name: string;
+  telephone: number;
+  email: string;
+  messenger: string;
+  description: string;
+}
+
+export { Player, NewPlayer, UpdatePlayer };

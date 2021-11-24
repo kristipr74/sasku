@@ -39,13 +39,13 @@ const db: Db = {
   ],
   group: [
     {
-      id: "a",
+      id: 1,
       name: "Rock",
       description: "Allan ja Varts",
       created: "1. jaanuar",
     },
     {
-      id: "ab",
+      id: 2,
       name: "Rootsi",
       description: "Imbi ja Pajaan",
       created: "2. jaanuar",
@@ -53,9 +53,8 @@ const db: Db = {
   ],
   player: [
     {
-      id: "essa",
-      firstName: "Allan",
-      lastName: "Murrand",
+      id: 1,
+      name: "Allan Murrand",
       telephone: 561548,
       email: "allanm@gmail.com",
       messenger: "alla",
@@ -63,9 +62,8 @@ const db: Db = {
       created: "1.jaanuar",
     },
     {
-      id: "tessa",
-      firstName: "Vardo",
-      lastName: "Rohtmets",
+      id: 2,
+      name: "Vardo Rohtmets",
       telephone: 561548,
       email: "vardu@gmail.com",
       messenger: "varts",
@@ -99,13 +97,13 @@ const db: Db = {
   ],
   game: [
     {
-      id: "as",
+      id: 1,
       name: "Individuaalne",
       description: "Individuaalne arvestus",
       created: 2021,
     },
     {
-      id: "asa",
+      id: 2,
       name: "Paarikas",
       description: "Paarisarvestus",
       created: 2021,

@@ -5,6 +5,12 @@ interface NewGame {
 }
 
 interface Game extends NewGame {
-  id: string;
+  id: number;
 }
-export { Game, NewGame };
+
+interface UpdateGame {
+  id: number;
+  name: string;
+}
+
+export { Game, NewGame, UpdateGame };

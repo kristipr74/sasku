@@ -1,11 +1,14 @@
 import express, { Router } from "express";
-import { createPlayer, getAllPlayers, getPlayerById } from "./controller";
+import playerController from "./controller";
+import playerService from "./service";
 
 const router: Router = express.Router();
 
 router
-.get('/', getAllPlayers)
-.get('/:id', getPlayerById)
-.post('/', createPlayer)
+  .get("/", playerController.getAllPlayers)
+  .get("/:id", playerController.getPlayerById)
+  .post("/", playerController.createPlayer)
+  .delete("/:id", playerController.removePlayer)
+  .patch("/", playerController.updatePlayer);
 
 export default router;

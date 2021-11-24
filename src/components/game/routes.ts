@@ -1,8 +1,14 @@
 import express, { Router } from "express";
-import { createGame, getAllGames, getGameById } from "./controller";
+import gameController from "./controller";
+import gameService from "./service";
 
 const router: Router = express.Router();
 
-router.get("/", getAllGames).get("/:id", getGameById).post("/", createGame);
+router
+  .get("/", gameController.getAllGames)
+  .get("/:id", gameController.getGameById)
+  .post("/", gameController.createGame)
+  .delete("/:id", gameController.removeGame)
+  .patch("/", gameController.updateGame);
 
 export default router;
