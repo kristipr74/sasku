@@ -1,0 +1,51 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Sasku turniiritabelid",
+    "version": "1.0"
+  },
+  "servers": [{ "url": "http://localhost:3000" }],
+  "paths": {
+    "/game": {
+      "get": {
+        "description": "Get list of Games",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of Games",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "game": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "Indivisuaalne mäng"
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Indivisuaalne punktiarvestus"
+                        },
+                        "created": {
+                          "type": "number",
+                          "example": 2021
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

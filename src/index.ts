@@ -1,8 +1,12 @@
 import express, { Application } from "express";
+import swaggerUi from "swagger-ui-express";
+import cors from 'cors';
+import openapi from "./openapi.json";
+
 
 import authController from "./components/auth/Controller";
 
-import pingController from "./components/ping/controller";
+import pingRouter from "./components/ping/routes";
 import playerRouter from "./components/player/routes";
 import userRouter from "./components/user/routes";
 import gameRouter from "./components/game/routes";
@@ -14,12 +18,15 @@ import isLoggedIn from "./general/middlewares/isLoggedIn";
 
 const app: Application = express();
 
-const port: number = 3001;
+const port: number = 3000;
 
 //Midelware
+app.use(cors());
 app.use(express.json());
 
-app.get("/ping", pingController);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapi));
+
+app.use("/ping", pingRouter);
 
 /* -------------- LOGIN -------------- */
 app.post("/login", login);
