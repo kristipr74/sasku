@@ -1,11 +1,25 @@
 {
-  "openapi": "3.0.2",
+  "openapi": "3.0.3",
   "info": {
     "title": "Sasku turniiritabelid",
     "version": "1.0"
   },
   "servers": [{ "url": "http://localhost:3000" }],
+  "components": {
+    
+  },
   "paths": {
+    "/user": {
+      "get": {
+        "description": "Get list of Users",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of Users"
+          }
+        }
+      }
+    },
     "/game": {
       "get": {
         "description": "Get list of Games",

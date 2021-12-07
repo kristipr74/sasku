@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import responseCodes from "../../general/responseCodes";
-import playerService from "./service";
+import playersService from "./service";
 import { Player, NewPlayer, UpdatePlayer } from "./interface";
 
-const playerController = {
+const playersController = {
   //Get player controller
   getAllPlayers: (req: Request, res: Response) => {
-    const player: Player[] = playerService.getAllPlayers();
+    const players: Player[] = playersService.getAllPlayers();
     return res.status(responseCodes.ok).json({
-      player,
+      players,
     });
   },
 
@@ -20,14 +20,14 @@ const playerController = {
         error: "Sellise id-ga Mängijat ei ole",
       });
     }
-    const player = playerService.getPlayerById(id);
-    if (!player) {
+    const players = playersService.getPlayerById(id);
+    if (!players) {
       return res.status(responseCodes.badRequest).json({
         message: `Sellise id-ga - ${id} - Mängijat ei ole!`,
       });
     }
     return res.status(responseCodes.ok).json({
-      player,
+      players,
     });
   },
 
@@ -63,7 +63,7 @@ const playerController = {
       description,
       created: "",
     };
-    const id = playerService.createPlayer(newPlayer);
+    const id = playersService.createPlayer(newPlayer);
 
     return res.status(responseCodes.ok).json({
       id,
@@ -77,13 +77,13 @@ const playerController = {
         error: "Sellist Mängijat ei eksisteeri",
       });
     }
-    const player: Player | undefined = playerService.getPlayerById(id);
-    if (!player) {
+    const players: Player | undefined = playersService.getPlayerById(id);
+    if (!players) {
       return res.status(responseCodes.badRequest).json({
         error: `Sellise  id - ga ${id} Mängijat ei eksisteeri`,
       });
     }
-    playerService.removePlayer(player);
+    playersService.removePlayer(players);
     return res.status(responseCodes.noContent).json({});
   },
 
@@ -115,8 +115,8 @@ const playerController = {
         error: "Sellise kirjeldusega Mängijat ei eksisteeri",
       });
     }
-    const player = playerService.getPlayerById(id);
-    if (!player) {
+    const players = playersService.getPlayerById(id);
+    if (!players) {
       return res.status(responseCodes.badRequest).json({
         error: `Sellise  id - ga ${id} Mängijat ei eksisteeri`,
       });
@@ -131,4 +131,4 @@ const playerController = {
     };
   },
 };
-export default playerController;
+export default playersController;

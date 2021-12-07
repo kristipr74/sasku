@@ -1,19 +1,18 @@
 import express, { Application } from "express";
 import swaggerUi from "swagger-ui-express";
-import cors from 'cors';
+import cors from "cors";
 import openapi from "./openapi.json";
-
 
 import authController from "./components/auth/Controller";
 
 import pingRouter from "./components/ping/routes";
-import playerRouter from "./components/player/routes";
-import userRouter from "./components/user/routes";
-import gameRouter from "./components/game/routes";
-import groupRouter from "./components/group/routes";
-import resultRouter from "./components/result/routes";
+import playersRouter from "./components/players/routes";
+import usersRouter from "./components/users/routes";
+import gamesRouter from "./components/games/routes";
+import groupsRouter from "./components/groups/routes";
+import resultsRouter from "./components/results/routes";
 
-import { login } from "./components/user/controller";
+//import { login } from "./components/users/controller";
 import isLoggedIn from "./general/middlewares/isLoggedIn";
 
 const app: Application = express();
@@ -29,23 +28,23 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapi));
 app.use("/ping", pingRouter);
 
 /* -------------- LOGIN -------------- */
-app.post("/login", login);
+//app.post("/login", login);
 
 /* -------------- RESULT -------------- */
-app.use("/result", resultRouter);
+app.use("/results", resultsRouter);
 
 /* -------------- PLAYER -------------- */
-app.use("/player", playerRouter);
+app.use("/players", playersRouter);
 //app.use("/player", isLoggedIn, playerRouter);
 
 /* -------------- USER -------------- */
-app.use("/user", userRouter);
+app.use("/users", usersRouter);
 
 /* -------------- GROUP -------------- */
-app.use("/group", groupRouter);
+app.use("/groups", groupsRouter);
 
 /* -------------- GAME -------------- */
-app.use("/game", gameRouter);
+app.use("/games", gamesRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);

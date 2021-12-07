@@ -1,21 +1,21 @@
-import { Result, NewResult } from "./components/result/interface";
-import { Group, NewGroup } from "./components/group/interface";
-import { Player, NewPlayer } from "./components/player/interface";
-import { User, NewUser } from "./components/user/interface";
-import { Game, NewGame } from "./components/game/interface";
+import { Result, NewResult } from "./components/results/interface";
+import { Group, NewGroup } from "./components/groups/interface";
+import { Player, NewPlayer } from "./components/players/interface";
+import { User, NewUser } from "./components/users/interface";
+import { Game, NewGame } from "./components/games/interface";
 
 interface Db {
-  result: Result[];
-  group: Group[];
-  player: Player[];
-  user: User[];
-  game: Game[];
+  results: Result[];
+  groups: Group[];
+  players: Player[];
+  users: User[];
+  games: Game[];
 }
 
 const db: Db = {
-  result: [
+  results: [
     {
-      id: "esimene",
+      id: 1,
       play: 1,
       table: 1,
       scoor: 16,
@@ -26,7 +26,7 @@ const db: Db = {
       saadudSaag: 0,
     },
     {
-      id: "teine",
+      id: 2,
       play: 2,
       table: 1,
       scoor: 10,
@@ -37,7 +37,7 @@ const db: Db = {
       saadudSaag: 1,
     },
   ],
-  group: [
+  groups: [
     {
       id: 1,
       name: "Rock",
@@ -51,7 +51,7 @@ const db: Db = {
       created: "2. jaanuar",
     },
   ],
-  player: [
+  players: [
     {
       id: 1,
       name: "Allan Murrand",
@@ -71,7 +71,7 @@ const db: Db = {
       created: "1.jaanuar",
     },
   ],
-  user: [
+  users: [
     {
       id: 1,
       userName: "KristiP",
@@ -95,18 +95,18 @@ const db: Db = {
       role: "User",
     },
   ],
-  game: [
+  games: [
     {
       id: 1,
       name: "Individuaalne",
       description: "Individuaalne arvestus",
-      created: 2021,
+      year: 2021,
     },
     {
       id: 2,
       name: "Paarikas",
       description: "Paarisarvestus",
-      created: 2021,
+      year: 2021,
     },
   ],
 };

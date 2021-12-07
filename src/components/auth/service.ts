@@ -1,4 +1,4 @@
-import userService from "../user/service";
+import userService from "../users/service";
 import hashService from "../../general/services/hahshService";
 import jwtService from "../../general/services/jwtService";
 

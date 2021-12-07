@@ -1,15 +1,3 @@
-interface Result {
-  id: string;
-  play: number;
-  table: number;
-  scoor: number;
-  win: number;
-  karvane: number;
-  saag: number;
-  saadudKarvane: number;
-  saadudSaag: number;
-}
-
 interface NewResult {
   play: number;
   table: number;
@@ -21,4 +9,20 @@ interface NewResult {
   saadudSaag: number;
 }
 
-export { Result, NewResult };
+interface Result extends NewResult {
+  id: number;
+}
+
+interface UpdateResult {
+  id: number;
+  play: number;
+  /*   table: number;
+  scoor: number;
+  win: number;
+  karvane: number;
+  saag: number;
+  saadudKarvane: number;
+  saadudSaag: number; */
+}
+
+export { Result, NewResult, UpdateResult };

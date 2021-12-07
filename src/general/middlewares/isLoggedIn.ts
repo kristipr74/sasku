@@ -1,23 +1,23 @@
-import { json } from "body-parser";
-import { Request, Response, NextFunction } from "express";
-import responseCodes from "../responseCodes";
-import jwtService from "../services/jwtService";
+import { Request, Response, NextFunction } from 'express';
+import jwtService from '../services/jwtService';
+import responseCodes from '../responseCodes';
 
 const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeaders = req.headers.authorization;
-  const token = authHeaders?.split(" ")[1];
-  if (token) {
-    const payload = await jwtService.verify(token);
-    if (!payload) {
-      return res.status(responseCodes.notAuthorized).json({
-        error: "Token is not valid",
-      });
-    }
-    return next();
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(' ')[1];
+  if (!token) {
+    return res.status(responseCodes.notAuthorized).json({
+      error: 'No token provided',
+    });
   }
-  return res.status(responseCodes.notAuthorized).json({
-    error: "no token provided",
-  });
+  const payload = await jwtService.verify(token);
+  if (!payload) {
+    return res.status(responseCodes.notAuthorized).json({
+      error: 'Invalid token',
+    });
+  }
+  res.locals.user = payload;
+  return next();
 };
 
 export default isLoggedIn;

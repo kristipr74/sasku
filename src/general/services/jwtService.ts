@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { User } from "../../components/user/interface";
+import { User } from "../../components/users/interface";
 import config from "../../config";
 
 const jwtService = {

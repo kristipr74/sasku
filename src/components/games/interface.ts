@@ -1,7 +1,7 @@
 interface NewGame {
   name: string;
   description: string;
-  created: number;
+  year: number;
 }
 
 interface Game extends NewGame {
