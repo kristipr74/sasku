@@ -6,6 +6,7 @@ const jwtService = {
   sign: async (user: User): Promise<string> => {
     const payload = {
       id: user.id,
+      role: user.role,
     };
     const token = await jwt.sign(payload, config.jwtSecret, {
       expiresIn: "1h",

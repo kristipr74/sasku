@@ -9,7 +9,7 @@
     
   },
   "paths": {
-    "/user": {
+    "/users": {
       "get": {
         "description": "Get list of Users",
         "parameters": [],
@@ -20,7 +20,7 @@
         }
       }
     },
-    "/game": {
+    "/games": {
       "get": {
         "description": "Get list of Games",
         "parameters": [],

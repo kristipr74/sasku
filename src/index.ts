@@ -14,6 +14,8 @@ import resultsRouter from "./components/results/routes";
 
 //import { login } from "./components/users/controller";
 import isLoggedIn from "./general/middlewares/isLoggedIn";
+import isAdmin from "./general/middlewares/isAdmin";
+import usersController from "./components/users/controller";
 
 const app: Application = express();
 
@@ -28,14 +30,16 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openapi));
 app.use("/ping", pingRouter);
 
 /* -------------- LOGIN -------------- */
-//app.post("/login", login);
+app.post("/login", authController.login);
+app.post('/users', usersController.createUser);
+
+app.use(isLoggedIn);
 
 /* -------------- RESULT -------------- */
 app.use("/results", resultsRouter);
 
 /* -------------- PLAYER -------------- */
 app.use("/players", playersRouter);
-//app.use("/player", isLoggedIn, playerRouter);
 
 /* -------------- USER -------------- */
 app.use("/users", usersRouter);

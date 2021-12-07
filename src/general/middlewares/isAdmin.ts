@@ -5,7 +5,7 @@ const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
   const { users } = res.locals;
   if (users.role !== "Admin") {
     return res.status(responseCodes.notAuthorized).json({
-      error: "You have to be admin for this operatation",
+      error: "Sul ei ole antud keskkonnas Admin õiguseid",
     });
   }
   return next();

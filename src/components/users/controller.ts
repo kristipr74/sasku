@@ -37,26 +37,9 @@ const usersController = {
 
   //Create user controller
   createUser: async (req: Request, res: Response) => {
-    const {
-      userName,
-      password,
-      firstName,
-      lastName,
-      description,
-      created,
-      email,
-      role,
-    } = req.body;
-    if (!userName) {
-      return res.status(responseCodes.badRequest).json({
-        error: "Sisesta palun kasutajanimi",
-      });
-    }
-    if (!password) {
-      return res.status(responseCodes.badRequest).json({
-        error: "Sisesta palun parool",
-      });
-    }
+    const { firstName, lastName, description, created, email, password } =
+      req.body;
+
     if (!firstName) {
       return res.status(responseCodes.badRequest).json({
         error: "Sisesta palun Eesnimi",
@@ -72,15 +55,19 @@ const usersController = {
         error: "Sisesta palun e-maili aadress",
       });
     }
+    if (!password) {
+      return res.status(responseCodes.badRequest).json({
+        error: "Sisesta palun parool",
+      });
+    }
     const newUser: NewUser = {
-      userName,
-      password,
       firstName,
       lastName,
       description,
       created,
       email,
-      role: "User",
+      password,
+      role: 'User',
     };
     const id = await usersService.createUser(newUser);
     return res.status(responseCodes.ok).json({

@@ -1,14 +1,14 @@
-import userService from "../users/service";
+import usersService from "../users/service";
 import hashService from "../../general/services/hahshService";
 import jwtService from "../../general/services/jwtService";
 
 const loginService = {
   login: async (email: string, password: string) => {
-    const user = userService.getUserByEmail(email);
-    if (!user) return false;
-    const match = await hashService.compare(password, user.password);
+    const users = usersService.getUserByEmail(email);
+    if (!users) return false;
+    const match = await hashService.mach(password, users.password);
     if (!match) return false;
-    const token = await jwtService.sign(user);
+    const token = await jwtService.sign(users);
     return token;
   },
 };

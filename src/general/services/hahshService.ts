@@ -7,7 +7,7 @@ const hashService = {
     const hash = await bcrypt.hash(password, saltRounds);
     return hash;
   },
-  compare: async (password: string, hash: string): Promise<boolean> => {
+  mach: async (password: string, hash: string): Promise<boolean> => {
     const match = await bcrypt.compare(password, hash);
     return match;
   },
