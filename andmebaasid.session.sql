@@ -1,0 +1,3 @@
+show DATABASES;
+USE sasku;
+

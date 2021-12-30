@@ -33,10 +33,23 @@ const playersController = {
 
   //Create player controller
   createPlayer: (req: Request, res: Response) => {
-    const { name, telephone, email, messenger, description } = req.body;
-    if (!name) {
+    const {
+      firstName,
+      lastName,
+      telephone,
+      email,
+      messenger,
+      description,
+      created,
+    } = req.body;
+    if (!firstName) {
       return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta Mängija nimi",
+        error: "Palun sisesta Mängija eesnimi",
+      });
+    }
+    if (!lastName) {
+      return res.status(responseCodes.badRequest).json({
+        error: "Palun sisesta Mängija perekonnanimi",
       });
     }
     if (!email) {
@@ -55,8 +68,14 @@ const playersController = {
         error: "Palun sisesta Mängija kirjeldus",
       });
     }
+    if (!created) {
+      return res.status(responseCodes.badRequest).json({
+        error: "Palun sisesta Mängija lisamise aeg",
+      });
+    }
     const newPlayer: NewPlayer = {
-      name,
+      firstName,
+      lastName,
       telephone,
       email,
       messenger,
@@ -89,8 +108,21 @@ const playersController = {
 
   updatePlayer: (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    const { name, telephone, email, messenger, description } = req.body;
-    if (!name) {
+    const {
+      firstName,
+      lastName,
+      telephone,
+      email,
+      messenger,
+      description,
+      created,
+    } = req.body;
+    if (!firstName) {
+      return res.status(responseCodes.badRequest).json({
+        error: "Sellise nimega Mängijat ei eksisteeri",
+      });
+    }
+    if (!lastName) {
       return res.status(responseCodes.badRequest).json({
         error: "Sellise nimega Mängijat ei eksisteeri",
       });
@@ -115,6 +147,11 @@ const playersController = {
         error: "Sellise kirjeldusega Mängijat ei eksisteeri",
       });
     }
+    if (!created) {
+      return res.status(responseCodes.badRequest).json({
+        error: "Sellisel ajal loodud Mängijat ei eksisteeri",
+      });
+    }
     const players = playersService.getPlayerById(id);
     if (!players) {
       return res.status(responseCodes.badRequest).json({
@@ -123,11 +160,13 @@ const playersController = {
     }
     const update: UpdatePlayer = {
       id,
-      name,
+      firstName,
+      lastName,
       telephone,
       email,
       messenger,
       description,
+      created,
     };
   },
 };

@@ -26,10 +26,18 @@ const playersService = {
 
   removePlayer: (players: Player | undefined) => {
     if (players) {
-      const index = db.players.findIndex((element) => element.id === players.id);
+      const index = db.players.findIndex(
+        (element) => element.id === players.id
+      );
       db.players.splice(index, 1);
     }
     return true;
+  },
+  updatePlayer: (players: UpdatePlayer) => {
+    const index = db.players.findIndex((element) => element.id === players.id);
+    if (index) {
+      db.players[index].email = players.email;
+    }
   },
 };
 

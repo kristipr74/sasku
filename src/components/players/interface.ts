@@ -1,5 +1,6 @@
 interface NewPlayer {
-  name: string;
+  firstName: string;
+  lastName: string;
   telephone: number;
   email: string;
   messenger: string;
@@ -13,11 +14,13 @@ interface Player extends NewPlayer {
 
 interface UpdatePlayer {
   id: number;
-  name: string;
-  telephone: number;
+  firstName?: string;
+  lastName?: string;
+  telephone?: number;
   email: string;
-  messenger: string;
-  description: string;
+  messenger?: string;
+  description?: string;
+  created?: string;
 }
 
 export { Player, NewPlayer, UpdatePlayer };

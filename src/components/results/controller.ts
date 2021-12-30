@@ -33,7 +33,7 @@ const resultsController = {
     const {
       play,
       table,
-      scoor,
+      result,
       win,
       karvane,
       saag,
@@ -50,7 +50,7 @@ const resultsController = {
         error: "Palun sisesta laua number",
       });
     }
-    if (!scoor) {
+    if (!result) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta saadud punktid",
       });
@@ -83,7 +83,7 @@ const resultsController = {
     const newResult: NewResult = {
       play,
       table,
-      scoor,
+      result,
       win,
       karvane,
       saag,

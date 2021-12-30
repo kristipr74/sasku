@@ -35,7 +35,7 @@ const gamesService = {
   updateGroup: (games: UpdateGame) => {
     const index = db.games.findIndex((element) => element.id === games.id);
     if (index) {
-      db.games[index].name = games.name;
+      db.games[index].type = games.type;
     }
   },
 };

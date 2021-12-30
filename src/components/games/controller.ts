@@ -33,23 +33,28 @@ const gamesController = {
 
   //Create game controller
   createGame: (req: Request, res: Response) => {
-    const { name, description, year } = req.body;
-    if (!name) {
+    const { date, type, description, location } = req.body;
+    if (!date) {
       return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta sarja nimi",
+        error: "Palun sisesta sarja toimumise aeg",
+      });
+    }
+    if (!type) {
+      return res.status(responseCodes.badRequest).json({
+        error: "Palun sisesta sarja tüüp",
       });
     }
     if (!description) {
       return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta Mänijate nimed",
+        error: "Palun sisesta kirjeldus",
       });
     }
-    if (!year) {
+    if (!location) {
       return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta sarja grupi loomise aeg",
+        error: "Palun sisesta sarja toimumise koht,"
       });
     }
-    const newGame: NewGame = { name, description, year };
+    const newGame: NewGame = { date, type, description, location };
     const id = gamesService.createGame(newGame);
 
     return res.status(responseCodes.ok).json({
@@ -76,8 +81,8 @@ const gamesController = {
 
   updateGame: (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
-    const { name } = req.body;
-    if (!name) {
+    const { type } = req.body;
+    if (!type) {
       return res.status(responseCodes.badRequest).json({
         error: "Sellist nimega sarja ei eksisteeri",
       });
@@ -90,7 +95,7 @@ const gamesController = {
     }
     const update: UpdateGame = {
       id,
-      name,
+      type,
     };
   },
 };

@@ -1,7 +1,8 @@
 interface NewGame {
-  name: string;
+  date: string;
+  type: "Paarikas" | "Suvesari" | "Individuaal";
   description: string;
-  year: number;
+  location: "Willy" | "Muu";
 }
 
 interface Game extends NewGame {
@@ -10,7 +11,7 @@ interface Game extends NewGame {
 
 interface UpdateGame {
   id: number;
-  name: string;
+  type: "Paarikas" | "Suvesari" | "Individuaal";
 }
 
 export { Game, NewGame, UpdateGame };
