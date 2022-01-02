@@ -16,7 +16,7 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
       error: "Invalid token",
     });
   }
-  res.locals.users = payload;
+  res.locals.players = payload;
   return next();
 };
 

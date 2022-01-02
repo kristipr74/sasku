@@ -1,12 +1,13 @@
 import jwt from "jsonwebtoken";
-import { User } from "../../components/users/interface";
+import { IPlayer } from "../../components/players/interface";
+//import { User } from "../../components/users/interface";
 import config from "../../config";
 
 const jwtService = {
-  sign: async (user: User): Promise<string> => {
+  sign: async (players: IPlayer): Promise<string> => {
     const payload = {
-      id: user.id,
-      role: user.role,
+      id: players.id,
+      role: players.role,
     };
     const token = await jwt.sign(payload, config.jwtSecret, {
       expiresIn: "1h",

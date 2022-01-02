@@ -1,13 +1,13 @@
 import { Result, NewResult } from "./components/results/interface";
 import { Group, NewGroup } from "./components/groups/interface";
-import { Player, NewPlayer } from "./components/players/interface";
+import { IPlayer, INewPlayer } from "./components/players/interface";
 import { User, NewUser } from "./components/users/interface";
 import { Game, NewGame } from "./components/games/interface";
 
 interface Db {
   results: Result[];
   groups: Group[];
-  players: Player[];
+  players: IPlayer[];
   users: User[];
   games: Game[];
 }
@@ -54,23 +54,27 @@ const db: Db = {
   players: [
     {
       id: 1,
-      firstName: "Allan",
-      lastName: "Murrand",
-      telephone: 561548,
-      email: "allanm@gmail.com",
+      firstName: "Kristi",
+      lastName: "Pruul",
+      tel: 561548,
+      email: "kristi@gmail.com",
+      password: "$2b$10$PXaNnUDAxKX44h16s6IFc.DodT5c9SF3Rw4T2LTDbp6xmlCFX6LZe",
       messenger: "alla",
       description: "Üks mängijatest",
       created: "1.jaanuar",
+      role: "Admin",
     },
     {
       id: 2,
-      firstName: "Vardo ",
-      lastName: "Rohtmets",
-      telephone: 561548,
+      firstName: "Allan ",
+      lastName: "Murrand",
+      tel: 561548,
       email: "vardu@gmail.com",
+      password: "$2b$10$CLlc/3ZfL5LlYvZMVG.eZu8T53Z67FvbMpjVbzkecDM/DD7lhzmja",
       messenger: "varts",
       description: "Teine mängijatest",
       created: "1.jaanuar",
+      role: "User",
     },
   ],
   users: [

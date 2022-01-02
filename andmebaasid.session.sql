@@ -1,3 +1,3 @@
 show DATABASES;
-USE sasku;
+
 

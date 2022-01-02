@@ -1,26 +1,33 @@
-interface NewPlayer {
+interface INewPlayer {
   firstName: string;
   lastName: string;
-  telephone: number;
+  tel: number;
   email: string;
+  password: string;
   messenger: string;
   description: string;
   created: string;
+  role: "Admin" | "User";
 }
 
-interface Player extends NewPlayer {
+interface IPlayer extends INewPlayer {
   id: number;
+/*   dateCreated: Date;
+  dateUpdated: Date;
+  dateDeleted: Date | null; */
 }
 
-interface UpdatePlayer {
+interface IUpdatePlayer {
   id: number;
   firstName?: string;
   lastName?: string;
-  telephone?: number;
-  email: string;
+  tel?: number;
+  email?: string;
+  password?: string;
   messenger?: string;
   description?: string;
   created?: string;
+  role?: "Admin" | "User";
 }
 
-export { Player, NewPlayer, UpdatePlayer };
+export { IPlayer, INewPlayer, IUpdatePlayer };

@@ -1,4 +1,4 @@
-import request from "supertest";
+/* import request from "supertest";
 import { expect } from "chai";
 import { describe, it } from "mocha";
 import app from "../src/app";
@@ -63,4 +63,4 @@ describe("Ping conroller", () => {
       gamesId = response.body.id;
     });
   });
-});
+}); */
