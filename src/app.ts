@@ -11,12 +11,7 @@ import usersRouter from "./components/users/routes";
 import gamesRouter from "./components/games/routes";
 import groupsRouter from "./components/groups/routes";
 import resultsRouter from "./components/results/routes";
-
-import  login  from "./components/players/controller";
 import isLoggedIn from "./general/middlewares/isLoggedIn";
-import isAdmin from "./general/middlewares/isAdmin";
-//import usersController from "./components/users/controller";
-import playersService from "./components/players/service";
 import playersController from "./components/players/controller";
 
 const app: Application = express();

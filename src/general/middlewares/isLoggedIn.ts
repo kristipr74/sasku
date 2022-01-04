@@ -12,6 +12,8 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
         error: "Token is not valid",
       });
     }
+
+    console.log('Payload->',payload);
     res.locals.players = payload;
     return next();
   }

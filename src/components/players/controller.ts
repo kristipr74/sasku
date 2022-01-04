@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import responseCodes from "../../general/responseCodes";
 import playersService from "./service";
 import { INewPlayer, IUpdatePlayer } from "./interface";
+import hashService from "../../general/services/hahshService";
+import jwtService from "../../general/services/jwtService";
+import isAdmin from "../../general/middlewares/isAdmin";
 
 
 const playersController = {
@@ -163,7 +166,7 @@ const playersController = {
       });
     }
     const updatePlayer: IUpdatePlayer = {
-      id,
+      idplayers: id,
     };
     if (firstName) updatePlayer.firstName = firstName;
     if (lastName) updatePlayer.lastName = lastName;
@@ -181,27 +184,31 @@ const playersController = {
 
     return res.status(responseCodes.noContent).json({});
   },
+
+   login: async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    const players = await playersService.getPlayersByEmail(email);
+    if (!players) {
+      return res.status(responseCodes.notFound).json({
+        error: "Sellist kasutajat ei eksisteeri!",
+      });
+    }
+/*     // const match = await hashService.compare(password, players.password);
+    if (!match) {
+  
+      return res.status(responseCodes.notFound).json({
+        error: "Sisestatud parool on vale, proovi uuesti!",
+      });
+    } */
+    const token = await jwtService.sign(players)
+    return res.status(responseCodes.ok).json({
+      token: "token",
+    }); 
+  
+  },
 }
 
- /* const login: async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  const players = await playersService.getPlayersByEmail(email);
-  if (!players) {
-    return res.status(responseCodes.notFound).json({
-      error: "Sellist kasutajat ei eksisteeri!",
-    });
-  }
-  const match = await hashService.compare(password, players.password);
-  if (!match) {
 
-    return res.status(responseCodes.notFound).json({
-      error: "Sisestatud parool on vale, proovi uuesti!",
-    });
-  }
-  const token = await jwtService.sign(players)
-  return res.status(responseCodes.ok).json({
-    token: "token",
-  }); 
-} */
+
 
 export default playersController;

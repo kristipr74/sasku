@@ -13,14 +13,14 @@ interface INewPlayer {
 }
 
 interface IPlayer extends INewPlayer, RowDataPacket {
-  id: number;
+  idplayers: number;
   /*   dateCreated: Date;
   dateUpdated: Date;
   dateDeleted: Date | null; */
 }
 
 interface IUpdatePlayer {
-  id: number;
+  idplayers: number;
   firstName?: string;
   lastName?: string;
   tel?: number;

@@ -47,32 +47,32 @@ const db: Db = {
       created: "2021-12-02",
     },
   ], */
-/*   players: [
-    {
-      id: 1,
-      firstName: "Kristi",
-      lastName: "Pruul",
-      tel: 561548,
-      email: "kristi@gmail.com",
-      password: "$2b$10$PXaNnUDAxKX44h16s6IFc.DodT5c9SF3Rw4T2LTDbp6xmlCFX6LZe",
-      messenger: "alla",
-      description: "Üks mängijatest",
-      created: "1.jaanuar",
-      role: "Admin",
-    },
-    {
-      id: 2,
-      firstName: "Allan ",
-      lastName: "Murrand",
-      tel: 561548,
-      email: "vardu@gmail.com",
-      password: "$2b$10$CLlc/3ZfL5LlYvZMVG.eZu8T53Z67FvbMpjVbzkecDM/DD7lhzmja",
-      messenger: "varts",
-      description: "Teine mängijatest",
-      created: "1.jaanuar",
-      role: "User",
-    },
-  ], */
+  // players: [
+  //   {
+  //     id: 1,
+  //     firstName: "Kristi",
+  //     lastName: "Pruul",
+  //     tel: 561548,
+  //     email: "kristi@gmail.com",
+  //     password: "$2b$10$PXaNnUDAxKX44h16s6IFc.DodT5c9SF3Rw4T2LTDbp6xmlCFX6LZe",
+  //     messenger: "alla",
+  //     description: "Üks mängijatest",
+  //     created: "1.jaanuar",
+  //     role: "Admin",
+  //   },
+  //   {
+  //     id: 2,
+  //     firstName: "Allan ",
+  //     lastName: "Murrand",
+  //     tel: 561548,
+  //     email: "vardu@gmail.com",
+  //     password: "$2b$10$CLlc/3ZfL5LlYvZMVG.eZu8T53Z67FvbMpjVbzkecDM/DD7lhzmja",
+  //     messenger: "varts",
+  //     description: "Teine mängijatest",
+  //     created: "1.jaanuar",
+  //     role: "User",
+  //   },
+  // ],
   users: [
     {
       id: 1,

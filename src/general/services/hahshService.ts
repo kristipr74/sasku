@@ -8,6 +8,7 @@ const hashService = {
     return hash;
   },
   mach: async (password: string, hash: string): Promise<boolean> => {
+    console.log(password, hash);
     const match = await bcrypt.compare(password, hash);
     return match;
   },
