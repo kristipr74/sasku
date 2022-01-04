@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import hashService from "../../general/services/hahshService";
 import responseCodes from "../../general/responseCodes";
 import playersService from "./service";
-import { IPlayer, INewPlayer, IUpdatePlayer } from "./interface";
-import jwtService from "../../general/services/jwtService";
+import { INewPlayer, IUpdatePlayer } from "./interface";
+
 
 const playersController = {
   //Get player controller
@@ -15,7 +14,7 @@ const playersController = {
   },
 
   //Get player by id controller
-  getPlayerById: (req: Request, res: Response) => {
+  getPlayerById: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
@@ -23,14 +22,14 @@ const playersController = {
       });
     }
     if (id === res.locals.players.id || res.locals.players.role === "Admin") {
-      const players = playersService.getPlayerById(id);
-      if (!players) {
+      const player = playersService.getPlayerById(id);
+      if (!player) {
         return res.status(responseCodes.badRequest).json({
           message: `Sellise - ${id} -ga  kasutajat ei ole!`,
         });
       }
       return res.status(responseCodes.ok).json({
-        players,
+        player,
       });
     }
 
@@ -50,7 +49,6 @@ const playersController = {
       messenger,
       description,
       created,
-      role,
     } = req.body;
     if (!firstName) {
       return res.status(responseCodes.badRequest).json({
@@ -60,6 +58,11 @@ const playersController = {
     if (!lastName) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta Mängija perekonnanimi",
+      });
+    }
+    if (!tel) {
+      return res.status(responseCodes.badRequest).json({
+        error: "Palun sisesta Mänija telefoninumber",
       });
     }
     if (!email) {
@@ -72,12 +75,6 @@ const playersController = {
         error: "Sisesta palun parool",
       });
     }
-    if (!tel) {
-      return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta Mänija telefoninumber",
-      });
-    }
-
     if (!description) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta Mängija kirjeldus",
@@ -100,31 +97,28 @@ const playersController = {
       role: "User",
     };
     const id = await playersService.createPlayer(newPlayer);
-    if (!id) {
-      return res.status(500).json({
-       error: 'Selline kasutaja on juba olemas!'
-      });
-    }
-
-    return res.status(responseCodes.ok).json({
+    return res.status(responseCodes.created).json({
       id,
     });
   },
 
-  removePlayer: (req: Request, res: Response) => {
+  deletePlayer: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     if (!id) {
       return res.status(responseCodes.badRequest).json({
         error: "Sellist Mängijat ei eksisteeri",
       });
     }
-    const players: IPlayer | undefined = playersService.getPlayerById(id);
-    if (!players) {
+    const player = playersService.getPlayerById(id);
+    if (!player) {
       return res.status(responseCodes.badRequest).json({
         error: `Sellise  id - ga ${id} Mängijat ei eksisteeri`,
       });
     }
-    playersService.removePlayer(players);
+    const response = await playersService.deletePlayer(id);
+    if (!response) {
+      return res.status(responseCodes.serverError).json({});
+      }
     return res.status(responseCodes.noContent).json({});
   },
 
@@ -141,7 +135,7 @@ const playersController = {
       created,
       role,
     } = req.body;
-    const isAdmin = res.locals.players.role == "Admin";
+    const isAdmin = res.locals.player.role == "Admin";
     if (!id) {
       return res.status(responseCodes.badRequest).json({
         error: "Sellise id kasutajat ei ole",
@@ -162,8 +156,8 @@ const playersController = {
       });
     }
 
-    const players = playersService.getPlayerById(id);
-    if (!players) {
+    const player = playersService.getPlayerById(id);
+    if (!player) {
       return res.status(responseCodes.badRequest).json({
         error: `Sellise  id - ga ${id} Mängijat ei eksisteeri`,
       });
@@ -180,10 +174,10 @@ const playersController = {
     if (created) updatePlayer.created = created;
     if (role && isAdmin)
       updatePlayer.role = role === "Admin" ? "Admin" : "User";
-    // const result = await playersService.updatePlayer(updatePlayer);
-    // if (!result) {
-    //   res.status(responseCodes.serverError).json({});
-    // }
+   const result = await playersService.updatePlayer(updatePlayer);
+     if (!result) {
+      res.status(responseCodes.serverError).json({});
+     }
 
     return res.status(responseCodes.noContent).json({});
   },

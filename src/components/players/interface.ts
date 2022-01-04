@@ -1,3 +1,5 @@
+import { RowDataPacket } from "mysql2";
+
 interface INewPlayer {
   firstName: string;
   lastName: string;
@@ -10,9 +12,9 @@ interface INewPlayer {
   role: "Admin" | "User";
 }
 
-interface IPlayer extends INewPlayer {
+interface IPlayer extends INewPlayer, RowDataPacket {
   id: number;
-/*   dateCreated: Date;
+  /*   dateCreated: Date;
   dateUpdated: Date;
   dateDeleted: Date | null; */
 }

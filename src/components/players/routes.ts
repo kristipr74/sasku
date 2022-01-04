@@ -9,7 +9,7 @@ router
   .get("/", playersController.getAllPlayers)
   .get("/:id", playersController.getPlayerById)
   .post("/", playersController.createPlayer)
-  .delete("/:id", playersController.removePlayer)
+  .delete("/:id", playersController.deletePlayer)
   .patch("/", playersController.updatePlayer);
 
 export default router;

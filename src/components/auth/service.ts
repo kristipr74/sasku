@@ -4,11 +4,11 @@ import jwtService from "../../general/services/jwtService";
 
 const loginService = {
   login: async (email: string, password: string) => {
-    const players = playersService.getPlayersByEmail(email);
-    if (!players) return false;
-    const match = await hashService.mach(password, players.password);
+    const player = await playersService.getPlayersByEmail(email);
+    if (!player) return false;
+    const match = await hashService.mach(password, player.password);
     if (!match) return false;
-    const token = await jwtService.sign(players);
+    const token = await jwtService.sign(player);
     return token;
   },
 };

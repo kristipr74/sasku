@@ -1,28 +1,38 @@
-import { RowDataPacket, FieldPacket, ResultSetHeader } from "mysql2";
-import db from "../../db";
+import { FieldPacket, ResultSetHeader } from "mysql2";
+import pool from "../../database";
 import { IPlayer, INewPlayer, IUpdatePlayer } from "./interface";
 import hashService from "../../general/services/hahshService";
-import pool from "../../database";
 
 const playersService = {
-  getAllPlayers: async (): Promise<RowDataPacket[]> => {
-    const [players]: [RowDataPacket[], FieldPacket[]] = await pool.query(
-      "SELECT id, firstname, lastname, tel, email, password, messenger, description, created FROM players;"
-    );
-
-    return players;
+  getAllPlayers: async (): Promise<IPlayer[] | false > => {
+    try {
+      const [players]: [IPlayer[],  FieldPacket[]] = await pool.query(
+        "SELECT id, firstname, lastname, tel, email, password, messenger, description, created FROM players;"
+      );
+       return players;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   },
 
-  getPlayerById: (id: number): IPlayer | undefined => {
-    const players: IPlayer | undefined = db.players.find(
-      (element: IPlayer) => element.id === id
-    );
-    return players;
-  },
+   getPlayerById: async (id: number): Promise<IPlayer | false > => {
+     try {
+      const [player]: [IPlayer[], FieldPacket[]] = await pool.query(
+        "SELECT idplayers, firstname, lastname, email, description, created FROM players WHERE id = ?",
+        [id]
+      );
+      return player[0];
+     } catch (error) {
+      console.log(error);
+      return false;
+     }
 
-  getPlayersByEmail: async(email: string): Promise<RowDataPacket | false> => {
+  },   
+
+  getPlayersByEmail: async(email: string): Promise<IPlayer | false> => {
 try {
-const [players]: [RowDataPacket[], FieldPacket[]] = await pool.query('SELECT * FROM players WHERE email = ?, [email] ');
+const [players]: [IPlayer[], FieldPacket[]] = await pool.query('SELECT * FROM players WHERE email = ?, [email] ');
 return players[0];
 } catch (error) {
   console.log(error);
@@ -31,12 +41,10 @@ return players[0];
 
   },
 
-  createPlayer: async (newPlayer: INewPlayer): Promise<number | false> => {
+   createPlayer: async (newPlayer: INewPlayer): Promise<number | false> => {
     try {
-      const id = db.players.length + 1;
       const hashedPassword = await hashService.hash(newPlayer.password);
-      const player: IPlayer = {
-        id,
+      const player = {
         ...newPlayer,
         password: hashedPassword,
       };
@@ -49,24 +57,31 @@ return players[0];
       console.log(error);
       return false;
     }
-  },
+  },  
 
-  removePlayer: (players: IPlayer | undefined) => {
-    if (players) {
-      const index = db.players.findIndex(
-        (element) => element.id === players.id
-      );
-      db.players.splice(index, 1);
+  deletePlayer: async (id: number): Promise<boolean> => {
+    try {
+      await pool.query('UPDATE players SET dataDeleted = ? WHERE id = ?', [new Date(),id]);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
+  }, 
+
+     updatePlayer: async (player: IUpdatePlayer): Promise<boolean> => {
+  try {
+    const playerToUpdate = { ...player };
+    if (player.password) playerToUpdate.password = await hashService.hash(player.password);
+    const result = await pool.query('UPDATE players SET ? WHERE id = ?', [playerToUpdate, player.id]);
+    console.log(result);
     return true;
-  },
-
-/*      updatePlayer: (players: IUpdatePlayer) => {
-    const index = db.players.findIndex((element) => element.id === players.id);
-    if (index) {
-      db.players[index].email = players.email;
-    }
-  },  */
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+    
+  },   
 };
 
 export default playersService;

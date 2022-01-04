@@ -7,7 +7,7 @@ const jwtService = {
   sign: async (players: IPlayer): Promise<string> => {
     const payload = {
       id: players.id,
-      role: players.role,
+      //role: players.role,
     };
     const token = await jwt.sign(payload, config.jwtSecret, {
       expiresIn: "1h",

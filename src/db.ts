@@ -1,13 +1,9 @@
 import { Result, NewResult } from "./components/results/interface";
-import { Group, NewGroup } from "./components/groups/interface";
-import { IPlayer, INewPlayer } from "./components/players/interface";
 import { User, NewUser } from "./components/users/interface";
 import { Game, NewGame } from "./components/games/interface";
 
 interface Db {
   results: Result[];
-  groups: Group[];
-  players: IPlayer[];
   users: User[];
   games: Game[];
 }
@@ -37,7 +33,7 @@ const db: Db = {
       saadudSaag: "1",
     },
   ],
-  groups: [
+/*   groups: [
     {
       id: 1,
       name: "Rock",
@@ -50,8 +46,8 @@ const db: Db = {
       description: "Imbi ja Pajaan",
       created: "2021-12-02",
     },
-  ],
-  players: [
+  ], */
+/*   players: [
     {
       id: 1,
       firstName: "Kristi",
@@ -76,7 +72,7 @@ const db: Db = {
       created: "1.jaanuar",
       role: "User",
     },
-  ],
+  ], */
   users: [
     {
       id: 1,

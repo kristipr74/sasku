@@ -1,16 +1,20 @@
-interface NewGroup {
+import { RowDataPacket } from "mysql2";
+
+interface INewGroup {
   name: string;
   description: string;
   created: string;
+  createdBy: number,
+  playersId: number;
 }
 
-interface Group extends NewGroup {
+interface IGroup extends INewGroup, RowDataPacket {
   id: number;
 }
 
-interface UpdateGroup {
+interface IUpdateGroup {
   id: number;
   name: string;
 }
 
-export { Group, NewGroup, UpdateGroup };
+export { IGroup, INewGroup, IUpdateGroup };
