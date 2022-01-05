@@ -1,15 +1,15 @@
-import { Result, NewResult } from "./components/results/interface";
+//import { Result, NewResult } from "./components/results/interface";
 import { User, NewUser } from "./components/users/interface";
 import { Game, NewGame } from "./components/games/interface";
 
 interface Db {
-  results: Result[];
+  //results: Result[];
   users: User[];
   games: Game[];
 }
 
 const db: Db = {
-  results: [
+  /* results: [
     {
       id: 1,
       play: 1,
@@ -32,7 +32,7 @@ const db: Db = {
       saadudKarvane: "0",
       saadudSaag: "1",
     },
-  ],
+  ], */
 /*   groups: [
     {
       id: 1,

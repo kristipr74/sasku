@@ -1,28 +1,27 @@
-interface NewResult {
-  play: number;
-  table: number;
+import { RowDataPacket } from "mysql2";
+
+interface INewResult {
   result: number;
   win: "1" | "0";
   karvane: "1" | "0";
   saag: "1" | "0";
   saadudKarvane: "1" | "0";
   saadudSaag: "1" | "0";
+  resultId: number;
 }
 
-interface Result extends NewResult {
-  id: number;
+interface IResult extends INewResult, RowDataPacket {
+  idresult: number;
 }
 
-interface UpdateResult {
-  id: number;
-  play: number;
-  /*   table: number;
-  scoor: number;
+interface IUpdateResult {
+  idresult: number;
+  result: number;
   win: number;
   karvane: number;
   saag: number;
   saadudKarvane: number;
-  saadudSaag: number; */
+  saadudSaag: number;
 }
 
-export { Result, NewResult, UpdateResult };
+export { IResult, INewResult, IUpdateResult };

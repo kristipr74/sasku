@@ -3,7 +3,6 @@ import responseCodes from "../responseCodes";
 
 const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
   const { players } = res.locals;
-  console.log(players);
   if (players.role !== "Admin") {
     return res.status(responseCodes.notAuthorized).json({
       error: "Sul ei ole antud keskkonnas Admin õiguseid",

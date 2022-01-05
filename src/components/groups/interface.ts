@@ -2,19 +2,21 @@ import { RowDataPacket } from "mysql2";
 
 interface INewGroup {
   name: string;
-  description: string;
-  created: string;
-  createdBy: number,
-  playersId: number;
+  description?: string;
+  createdBy: number;
 }
 
 interface IGroup extends INewGroup, RowDataPacket {
-  id: number;
+  idgroups: number;
+  dateCreated: Date;
+  dateUpdated: Date;
+  dateDeleted: Date | null;
 }
 
 interface IUpdateGroup {
-  id: number;
+  idgroups: number;
   name: string;
+  description?: string;
 }
 
 export { IGroup, INewGroup, IUpdateGroup };

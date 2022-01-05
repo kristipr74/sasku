@@ -33,8 +33,8 @@ const groupsController = {
 
   //Create group controller
   createGroup: async (req: Request, res: Response) => {
-    const { name, description, created, createdBy } = req.body;
-    const playersId = res.locals.player.id;
+    const { name, description } = req.body;
+    const createdBy = res.locals.players.idplayer;
     if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: "Selline Grupi nimi on juba kasutusel",
@@ -43,15 +43,13 @@ const groupsController = {
     const newGroup: INewGroup = {
       name,
       description,
-      created,
       createdBy,
-      playersId,
     };
-    const id = await groupsService.createGroup(newGroup);
-    if (!id) {
+    const idgroups = await groupsService.createGroup(newGroup);
+    if (!idgroups) {
       return res.status(responseCodes.serverError).json({});
     }
-    /*     if (!name) {
+         if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta Grupi nimi",
       });
@@ -61,14 +59,14 @@ const groupsController = {
         error: "Palun sisesta Mänijate nimed",
       });
     }
-    if (!created) {
+    if (!createdBy) {
       return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta Grupi grupi loomise aeg",
+        error: "Palun sisesta Sisestaja nimi",
       });
-    } */
+    }
 
     return res.status(responseCodes.ok).json({
-      id,
+      idgroups,
     });
   },
 
@@ -107,7 +105,7 @@ const groupsController = {
       });
     }
     const update: IUpdateGroup = {
-      id,
+      idgroups: id,
       name,
     };
 

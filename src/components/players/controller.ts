@@ -6,7 +6,6 @@ import hashService from "../../general/services/hahshService";
 import jwtService from "../../general/services/jwtService";
 import isAdmin from "../../general/middlewares/isAdmin";
 
-
 const playersController = {
   //Get player controller
   getAllPlayers: async (req: Request, res: Response) => {
@@ -24,7 +23,10 @@ const playersController = {
         error: "Sellise id-ga Mängijat ei ole",
       });
     }
-    if (id === res.locals.players.id || res.locals.players.role === "Admin") {
+    if (
+      id === res.locals.players.id ||
+      res.locals.players.role === "Admin"
+    ) {
       const player = playersService.getPlayerById(id);
       if (!player) {
         return res.status(responseCodes.badRequest).json({
@@ -51,7 +53,6 @@ const playersController = {
       password,
       messenger,
       description,
-      created,
     } = req.body;
     if (!firstName) {
       return res.status(responseCodes.badRequest).json({
@@ -83,11 +84,6 @@ const playersController = {
         error: "Palun sisesta Mängija kirjeldus",
       });
     }
-    if (!created) {
-      return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta Mängija lisamise aeg",
-      });
-    }
     const newPlayer: INewPlayer = {
       firstName,
       lastName,
@@ -96,12 +92,11 @@ const playersController = {
       password,
       messenger,
       description,
-      created: "",
       role: "User",
     };
     const id = await playersService.createPlayer(newPlayer);
     return res.status(responseCodes.created).json({
-      id,
+      idplayer: id,
     });
   },
 
@@ -121,7 +116,7 @@ const playersController = {
     const response = await playersService.deletePlayer(id);
     if (!response) {
       return res.status(responseCodes.serverError).json({});
-      }
+    }
     return res.status(responseCodes.noContent).json({});
   },
 
@@ -135,7 +130,6 @@ const playersController = {
       password,
       messenger,
       description,
-      created,
       role,
     } = req.body;
     const isAdmin = res.locals.player.role == "Admin";
@@ -151,8 +145,7 @@ const playersController = {
       !email &&
       !password &&
       !messenger &&
-      !description &&
-      !created
+      !description
     ) {
       return res.status(responseCodes.badRequest).json({
         error: "Pole midagi uuendada",
@@ -174,18 +167,17 @@ const playersController = {
     if (email) updatePlayer.email = email;
     if (messenger) updatePlayer.messenger = messenger;
     if (description) updatePlayer.description = description;
-    if (created) updatePlayer.created = created;
     if (role && isAdmin)
       updatePlayer.role = role === "Admin" ? "Admin" : "User";
-   const result = await playersService.updatePlayer(updatePlayer);
-     if (!result) {
+    const result = await playersService.updatePlayer(updatePlayer);
+    if (!result) {
       res.status(responseCodes.serverError).json({});
-     }
+    }
 
     return res.status(responseCodes.noContent).json({});
   },
 
-   login: async (req: Request, res: Response) => {
+  login: async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const players = await playersService.getPlayersByEmail(email);
     if (!players) {
@@ -193,22 +185,18 @@ const playersController = {
         error: "Sellist kasutajat ei eksisteeri!",
       });
     }
-/*     // const match = await hashService.compare(password, players.password);
+    /*     // const match = await hashService.compare(password, players.password);
     if (!match) {
   
       return res.status(responseCodes.notFound).json({
         error: "Sisestatud parool on vale, proovi uuesti!",
       });
     } */
-    const token = await jwtService.sign(players)
+    const token = await jwtService.sign(players);
     return res.status(responseCodes.ok).json({
       token: "token",
-    }); 
-  
+    });
   },
-}
-
-
-
+};
 
 export default playersController;

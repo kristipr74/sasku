@@ -7,8 +7,9 @@ const playersService = {
   getAllPlayers: async (): Promise<IPlayer[] | false> => {
     try {
       const [players]: [IPlayer[], FieldPacket[]] = await pool.query(
-        "SELECT idplayers, firstname, lastname, tel, email, password, messenger, description, created FROM players;"
+        "SELECT idplayers, firstname, lastname, tel, email, password, messenger, description, dateCreated, role FROM players WHERE dateDeleted is NULL"
       );
+
       return players;
     } catch (error) {
       console.log(error);
@@ -16,12 +17,13 @@ const playersService = {
     }
   },
 
-  getPlayerById: async (id: number): Promise<IPlayer | false> => {
+  getPlayerById: async (idplayers: number): Promise<IPlayer | false> => {
     try {
       const [player]: [IPlayer[], FieldPacket[]] = await pool.query(
-        "SELECT idplayers, firstname, lastname, email, description, created FROM players WHERE id = ?",
-        [id]
+        "SELECT idplayers, firstname, lastname, email, description, dateCreated, dateDeleted, dateUpdate, role FROM players WHERE idplayers = ? AND dateDeleted IS NULL LIMIT 1",
+        [idplayers]
       );
+      console.log(player);
       return player[0];
     } catch (error) {
       console.log(error);
@@ -31,12 +33,11 @@ const playersService = {
 
   getPlayersByEmail: async (email: string): Promise<IPlayer | false> => {
     try {
-      const [players]: [IPlayer[], FieldPacket[]] = await pool.query(
+      const [player]: [IPlayer[], FieldPacket[]] = await pool.query(
         "SELECT * FROM players WHERE email = ?",
         [email]
       );
-      console.log(players[0]);
-      return players[0];
+      return player[0];
     } catch (error) {
       console.log(error);
       return false;
@@ -63,10 +64,10 @@ const playersService = {
 
   deletePlayer: async (id: number): Promise<boolean> => {
     try {
-      await pool.query("UPDATE players SET dataDeleted = ? WHERE idplayers = ?", [
-        new Date(),
-        id,
-      ]);
+      await pool.query(
+        "UPDATE players SET dateDeleted = ? WHERE idplayers = ?",
+        [new Date(), id]
+      );
       return true;
     } catch (error) {
       console.log(error);
@@ -79,11 +80,10 @@ const playersService = {
       const playerToUpdate = { ...player };
       if (player.password)
         playerToUpdate.password = await hashService.hash(player.password);
-      const result = await pool.query("UPDATE players SET ? WHERE idplayers = ?", [
-        playerToUpdate,
-        player.idplayers,
-      ]);
-      console.log(result);
+      const result = await pool.query(
+        "UPDATE players SET ? WHERE idplayers = ?",
+        [playerToUpdate, player.idplayers]
+      );
       return true;
     } catch (error) {
       console.log(error);

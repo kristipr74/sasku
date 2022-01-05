@@ -13,7 +13,6 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
       });
     }
 
-    console.log('Payload->',payload);
     res.locals.players = payload;
     return next();
   }

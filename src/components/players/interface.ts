@@ -3,20 +3,19 @@ import { RowDataPacket } from "mysql2";
 interface INewPlayer {
   firstName: string;
   lastName: string;
-  tel: number;
-  email: string;
+  tel?: number;
+  email?: string;
   password: string;
-  messenger: string;
-  description: string;
-  created: string;
+  messenger?: string;
+  description?: string;
   role: "Admin" | "User";
 }
 
 interface IPlayer extends INewPlayer, RowDataPacket {
   idplayers: number;
-  /*   dateCreated: Date;
+  dateCreated: Date;
   dateUpdated: Date;
-  dateDeleted: Date | null; */
+  dateDeleted: Date | null;
 }
 
 interface IUpdatePlayer {
@@ -28,7 +27,6 @@ interface IUpdatePlayer {
   password?: string;
   messenger?: string;
   description?: string;
-  created?: string;
   role?: "Admin" | "User";
 }
 
