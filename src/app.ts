@@ -11,6 +11,7 @@ import usersRouter from "./components/users/routes";
 import gamesRouter from "./components/games/routes";
 import groupsRouter from "./components/groups/routes";
 import resultsRouter from "./components/results/routes";
+import roundsRouter from "./components/rounds/routes";
 import isLoggedIn from "./general/middlewares/isLoggedIn";
 import playersController from "./components/players/controller";
 
@@ -44,5 +45,9 @@ app.use("/groups", groupsRouter);
 
 /* -------------- GAME -------------- */
 app.use("/games", gamesRouter);
+
+/* -------------- ROUNDS -------------- */
+app.use("/rounds", roundsRouter);
+
 
 export default app;
