@@ -2,14 +2,16 @@ import express, { Router } from "express";
 import isAdmin from "../../general/middlewares/isAdmin";
 import playersController from "./controller";
 
+import isLoggedIn from "../../general/middlewares/isLoggedIn";
+
 const router: Router = express.Router();
 
 router
   .get("/", isAdmin, playersController.getAllPlayers)
-  .get("/", playersController.getAllPlayers)
-  .get("/:id", playersController.getPlayerById)
-  .post("/", playersController.createPlayer)
-  .delete("/:id", playersController.deletePlayer)
-  .patch("/", playersController.updatePlayer);
+  .get("/", isLoggedIn, playersController.getAllPlayers)
+  .get("/:id", isLoggedIn, playersController.getPlayerById)
+  .post("/", isLoggedIn, playersController.createPlayer)
+  .delete("/:id", isLoggedIn, playersController.deletePlayer)
+  .patch("/", isLoggedIn, playersController.updatePlayer);
 
 export default router;

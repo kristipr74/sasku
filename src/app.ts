@@ -29,7 +29,7 @@ app.use("/ping", pingRouter);
 app.post("/login", authController.login);
 app.post("/players", playersController.createPlayer);
 
-app.use(isLoggedIn);
+//app.use(isLoggedIn);
 
 /* -------------- RESULT -------------- */
 app.use("/results", resultsRouter);

@@ -1,6 +1,8 @@
 import express, { Router } from "express";
 import groupsController from "./controller";
 
+import isLoggedIn from "../../general/middlewares/isLoggedIn";
+
 const router: Router = express.Router();
 
 router

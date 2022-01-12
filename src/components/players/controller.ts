@@ -23,10 +23,7 @@ const playersController = {
         error: "Sellise id-ga Mängijat ei ole",
       });
     }
-    if (
-      id === res.locals.players.id ||
-      res.locals.players.role === "Admin"
-    ) {
+    if (id === res.locals.players.id || res.locals.players.role === "Admin") {
       const player = playersService.getPlayerById(id);
       if (!player) {
         return res.status(responseCodes.badRequest).json({

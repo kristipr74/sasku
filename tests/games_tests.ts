@@ -1,9 +1,9 @@
-/* import request from "supertest";
+import request from "supertest";
 import { expect } from "chai";
 import { describe, it } from "mocha";
 import app from "../src/app";
 
-const user = {
+const player = {
   email: "kristi@gmail.com",
   password: "kristi",
 };
@@ -11,22 +11,22 @@ const user = {
 let token: string;
 let gamesId: number;
 
-describe("Ping conroller", () => {
+describe("Games conroller", () => {
   describe("GET / games", () => {
     it("respons with 200 and error message game of no invalid token", async () => {
-      const response = await request(app).get("/games").send(user);
+      const response = await request(app).get("/games").send(player);
       expect(response.body).to.be.a("object");
       expect(response.statusCode).to.equal(200);
       expect(response.body).to.have.key("token");
       expect(response.body.token).to.a("string");
       token = response.body.token;
     });
-    it("respons with 401 and error message game of no token provided", async () => {
+         it("respons with 401 and error message game of no token provided", async () => {
       const response = await request(app).get("/games");
       expect(response.body).to.be.a("object");
       expect(response.statusCode).to.equal(401);
       expect(response.body).to.have.key("error");
-      expect(response.body.message).to.equal("Kontrolli sisestatud andmeid");
+      expect(response.body.error).to.equal("Kontrolli sisestatud andmeid");
     });
     it("respons with 401 and error message game of no invalid token", async () => {
       const response = await request(app)
@@ -63,4 +63,4 @@ describe("Ping conroller", () => {
       gamesId = response.body.id;
     });
   });
-}); */
+});

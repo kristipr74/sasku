@@ -6,11 +6,10 @@ import hashService from "../../general/services/hahshService";
 const playersService = {
   getAllPlayers: async (): Promise<IPlayer[] | false> => {
     try {
-      const [players]: [IPlayer[], FieldPacket[]] = await pool.query(
+      const [player]: [IPlayer[], FieldPacket[]] = await pool.query(
         "SELECT idplayers, firstname, lastname, tel, email, password, messenger, description, dateCreated, role FROM players WHERE dateDeleted is NULL"
       );
-
-      return players;
+      return player;
     } catch (error) {
       console.log(error);
       return false;
