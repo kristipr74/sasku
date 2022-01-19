@@ -23,7 +23,7 @@ const groupsController = {
     const groups = await groupsService.getGroupById(id);
     if (!groups) {
       return res.status(responseCodes.badRequest).json({
-        message: `Sellise nimega - ${id} - gruppi ei ole!`,
+        error: `Sellise nimega - ${id} - gruppi ei ole!`,
       });
     }
     return res.status(responseCodes.ok).json({
@@ -34,7 +34,8 @@ const groupsController = {
   //Create group controller
   createGroup: async (req: Request, res: Response) => {
     const { name, description } = req.body;
-    const createdBy = res.locals.players.idplayer;
+    //const createdBy = res.locals.players.idplayers;
+    console.log(res.locals.players);
     if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: "Selline Grupi nimi on juba kasutusel",
@@ -43,13 +44,12 @@ const groupsController = {
     const newGroup: INewGroup = {
       name,
       description,
-      createdBy,
     };
     const idgroups = await groupsService.createGroup(newGroup);
     if (!idgroups) {
       return res.status(responseCodes.serverError).json({});
     }
-         if (!name) {
+    if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta Grupi nimi",
       });
@@ -59,12 +59,6 @@ const groupsController = {
         error: "Palun sisesta Mänijate nimed",
       });
     }
-    if (!createdBy) {
-      return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta Sisestaja nimi",
-      });
-    }
-
     return res.status(responseCodes.ok).json({
       idgroups,
     });
@@ -95,7 +89,7 @@ const groupsController = {
     const { name } = req.body;
     if (!name) {
       return res.status(responseCodes.badRequest).json({
-        error: "Andmed ühtivad baasis olevatega",
+        error: "Sisesta nimi mida muuta! ",
       });
     }
     const groups = await groupsService.getGroupById(id);

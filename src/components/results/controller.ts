@@ -5,9 +5,9 @@ import { INewResult, IUpdateResult } from "./interface";
 
 const resultsController = {
   getAllResults: async (req: Request, res: Response) => {
-    const result = await resultsService.getAllResult();
+    const results = await resultsService.getAllResult();
     return res.status(responseCodes.ok).json({
-      result,
+      results,
     });
   },
 
@@ -18,7 +18,7 @@ const resultsController = {
         error: "Sellise id-ga tulemusi ei ole",
       });
     }
-    const result = await resultsService.getResultById(id);
+/*     const result = await resultsService.getResultById(id);
     if (!result) {
       return res.status(responseCodes.badRequest).json({
         message: `Sellise id-ga - ${id} - tulemusi ei ole!`,
@@ -26,27 +26,20 @@ const resultsController = {
     }
     return res.status(responseCodes.ok).json({
       result,
-    });
+    }); */
   },
 
   createResult: async (req: Request, res: Response) => {
-    const {
-      result,
-      win,
-      karvane,
-      saag,
-      saadudKarvane,
-      saadudSaag,
-    } = req.body;
+    const { result, win, karvane, saw, getKarvane, getSaw } = req.body;
     const resultId = res.locals.player.idplayer;
 
     const newResult: INewResult = {
       result,
       win,
       karvane,
-      saag,
-      saadudKarvane,
-      saadudSaag,
+      saw,
+      getKarvane,
+      getSaw,
       resultId,
     };
     const id = await resultsService.createdResult(newResult);
@@ -69,17 +62,17 @@ const resultsController = {
         error: "Palun sisesta kas tegid karvase",
       });
     }
-    if (!saag) {
+    if (!saw) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta tegid sae",
       });
     }
-    if (!saadudKarvane) {
+    if (!getKarvane) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta kas said karvase",
       });
     }
-    if (!saadudSaag) {
+    if (!getSaw) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta kas said sae",
       });
@@ -109,7 +102,7 @@ const resultsController = {
     return res.status(responseCodes.noContent).json({});
   },
 
-/*   updateResult: async (req: Request, res: Response) => {
+  /*   updateResult: async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
     // const { result } = req.body;
     // if (!result) {

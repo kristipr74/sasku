@@ -2,9 +2,6 @@ import { Request, Response } from "express";
 import responseCodes from "../../general/responseCodes";
 import playersService from "./service";
 import { INewPlayer, IUpdatePlayer } from "./interface";
-import hashService from "../../general/services/hahshService";
-import jwtService from "../../general/services/jwtService";
-import isAdmin from "../../general/middlewares/isAdmin";
 
 const playersController = {
   //Get player controller
@@ -23,22 +20,22 @@ const playersController = {
         error: "Sellise id-ga Mängijat ei ole",
       });
     }
-    if (id === res.locals.players.id || res.locals.players.role === "Admin") {
-      const player = playersService.getPlayerById(id);
-      if (!player) {
-        return res.status(responseCodes.badRequest).json({
-          message: `Sellise - ${id} -ga  kasutajat ei ole!`,
-        });
-      }
-      return res.status(responseCodes.ok).json({
-        player,
+  if (id === res.locals.players.id || res.locals.players.role === "Admin") {
+    const player = await playersService.getPlayerById(id);
+    if (!player) {
+      return res.status(responseCodes.badRequest).json({
+        message: `Sellise - ${id} -ga  kasutajat ei ole!`,
       });
     }
+    return res.status(responseCodes.ok).json({
+      player,
+    });
+  }
 
     return res.status(responseCodes.notAuthorized).json({
       error: "Sul ei ole sellise tegevuse jaoks õigusi",
     });
-  },
+  }, 
 
   //Create player controller
   createPlayer: async (req: Request, res: Response) => {
@@ -81,6 +78,7 @@ const playersController = {
         error: "Palun sisesta Mängija kirjeldus",
       });
     }
+
     const newPlayer: INewPlayer = {
       firstName,
       lastName,
@@ -93,7 +91,7 @@ const playersController = {
     };
     const id = await playersService.createPlayer(newPlayer);
     return res.status(responseCodes.created).json({
-      idplayer: id,
+      id,
     });
   },
 
@@ -172,27 +170,6 @@ const playersController = {
     }
 
     return res.status(responseCodes.noContent).json({});
-  },
-
-  login: async (req: Request, res: Response) => {
-    const { email, password } = req.body;
-    const players = await playersService.getPlayersByEmail(email);
-    if (!players) {
-      return res.status(responseCodes.notFound).json({
-        error: "Sellist kasutajat ei eksisteeri!",
-      });
-    }
-    /*     // const match = await hashService.compare(password, players.password);
-    if (!match) {
-  
-      return res.status(responseCodes.notFound).json({
-        error: "Sisestatud parool on vale, proovi uuesti!",
-      });
-    } */
-    const token = await jwtService.sign(players);
-    return res.status(responseCodes.ok).json({
-      token: "token",
-    });
   },
 };
 

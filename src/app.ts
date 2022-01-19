@@ -27,9 +27,10 @@ app.use("/ping", pingRouter);
 
 /* -------------- LOGIN -------------- */
 app.post("/login", authController.login);
-app.post("/players", playersController.createPlayer);
 
-//app.use(isLoggedIn);
+app.use(isLoggedIn);
+
+app.post("/players", playersController.createPlayer);
 
 /* -------------- RESULT -------------- */
 app.use("/results", resultsRouter);
@@ -38,7 +39,7 @@ app.use("/results", resultsRouter);
 app.use("/players", playersRouter);
 
 /* -------------- USER -------------- */
-app.use("/users", usersRouter);
+//app.use("/users", usersRouter);
 
 /* -------------- GROUP -------------- */
 app.use("/groups", groupsRouter);
@@ -48,6 +49,5 @@ app.use("/games", gamesRouter);
 
 /* -------------- ROUNDS -------------- */
 app.use("/rounds", roundsRouter);
-
 
 export default app;

@@ -6,7 +6,7 @@ const groupsService = {
   getAllGroups: async (): Promise<IGroup[] | false> => {
     try {
       const [groups]: [IGroup[], FieldPacket[]] = await pool.query(
-        "SELECT idgroups, name, description, dateCreated, createdBy, dateUpdate FROM groups WHERE groups.dateDeleted IS NULL"
+        "SELECT idgroups, name, description, dateCreated, dateUpdated FROM groups WHERE groups.dateDeleted IS NULL"
       );
       return groups;
     } catch (error) {
@@ -31,8 +31,8 @@ const groupsService = {
   createGroup: async (newGroup: INewGroup): Promise<number | false> => {
     try {
       const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query(
-        "INSERT INTO group SET name = ?, description = ?, players_idplayers = ?",
-        [newGroup.name, newGroup.description, newGroup.createdBy]
+        "INSERT INTO groups SET name = ?, description = ?",
+        [newGroup.name, newGroup.description]
       );
       return result.insertId;
     } catch (error) {
@@ -41,12 +41,11 @@ const groupsService = {
     }
   },
 
-  removeGroup: async (id: number): Promise<boolean> => {
+  removeGroup: async (idgroups: number): Promise<boolean> => {
     try {
-      //await pool.query("UPDATE groups SET dataDeleted = ? WHERE idgroups = ?", [
       await pool.query("UPDATE groups SET dateDeleted = ? WHERE idgroups = ?", [
         new Date(),
-        id,
+        idgroups,
       ]);
       return true;
     } catch (error) {
@@ -57,7 +56,7 @@ const groupsService = {
 
   updateGroup: async (groups: IUpdateGroup): Promise<boolean> => {
     try {
-      await pool.query("UPDATE groups SET name = ? WHERE id = ?", [
+      await pool.query("UPDATE groups SET name = ? WHERE idgroups = ?", [
         groups.name,
         groups.idgroups,
       ]);

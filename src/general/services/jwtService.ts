@@ -18,7 +18,7 @@ const jwtService = {
       const playload = await jwt.verify(token, config.jwtSecret);
       return playload;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return false;
     }
   },

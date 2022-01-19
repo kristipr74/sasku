@@ -1,4 +1,4 @@
-import request from "supertest";
+/* import request from "supertest";
 import { expect } from "chai";
 import { describe, it } from "mocha";
 import app from "../src/app";
@@ -20,8 +20,8 @@ describe("Games conroller", () => {
       expect(response.body).to.have.key("token");
       expect(response.body.token).to.a("string");
       token = response.body.token;
-    });
-         it("respons with 401 and error message game of no token provided", async () => {
+    }); */
+/*          it("respons with 401 and error message game of no token provided", async () => {
       const response = await request(app).get("/games");
       expect(response.body).to.be.a("object");
       expect(response.statusCode).to.equal(401);
@@ -61,6 +61,6 @@ describe("Games conroller", () => {
       expect(response.body).to.have.key("id");
       expect(response.body.games).to.a("number");
       gamesId = response.body.id;
-    });
-  });
-});
+    }); */
+/*   });
+}); */

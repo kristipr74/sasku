@@ -4,9 +4,9 @@ interface INewResult {
   result: number;
   win: "1" | "0";
   karvane: "1" | "0";
-  saag: "1" | "0";
-  saadudKarvane: "1" | "0";
-  saadudSaag: "1" | "0";
+  saw: "1" | "0";
+  getKarvane: "1" | "0";
+  getSaw: "1" | "0";
   resultId: number;
 }
 
