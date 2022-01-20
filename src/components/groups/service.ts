@@ -28,6 +28,19 @@ const groupsService = {
     }
   },
 
+/*   getGroupByName: async (groupName: string): Promise<IGroup | false> => {
+    try {
+      const [groups]: [IGroup[], FieldPacket[]] = await pool.query(
+        "SELECT idgroups, name, description, dateCreated, dateUpdated FROM groups WHERE name = ? AND dateDeleted IS NULL",
+        [groupName]
+      );
+      return groups[0];
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }, */
+
   createGroup: async (newGroup: INewGroup): Promise<number | false> => {
     try {
       const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query(

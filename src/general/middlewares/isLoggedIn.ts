@@ -17,7 +17,7 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
     return next();
   }
   return res.status(responseCodes.notAuthorized).json({
-    error: "No token provide",
+    error: "No token provided",
   });
 };
 

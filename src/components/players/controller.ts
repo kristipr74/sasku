@@ -20,22 +20,22 @@ const playersController = {
         error: "Sellise id-ga Mängijat ei ole",
       });
     }
-  if (id === res.locals.players.id || res.locals.players.role === "Admin") {
+/*      if (id === res.locals.players.id || res.locals.players.role === "Admin") {*/
     const player = await playersService.getPlayerById(id);
     if (!player) {
       return res.status(responseCodes.badRequest).json({
         message: `Sellise - ${id} -ga  kasutajat ei ole!`,
       });
-    }
+    } 
     return res.status(responseCodes.ok).json({
       player,
     });
-  }
+  },
 
-    return res.status(responseCodes.notAuthorized).json({
+  /*     return res.status(responseCodes.notAuthorized).json({
       error: "Sul ei ole sellise tegevuse jaoks õigusi",
     });
-  }, 
+  }, */
 
   //Create player controller
   createPlayer: async (req: Request, res: Response) => {
@@ -127,7 +127,7 @@ const playersController = {
       description,
       role,
     } = req.body;
-    const isAdmin = res.locals.player.role == "Admin";
+    //const isAdmin = res.locals.player.role == "Admin";
     if (!id) {
       return res.status(responseCodes.badRequest).json({
         error: "Sellise id kasutajat ei ole",
@@ -162,8 +162,8 @@ const playersController = {
     if (email) updatePlayer.email = email;
     if (messenger) updatePlayer.messenger = messenger;
     if (description) updatePlayer.description = description;
-    if (role && isAdmin)
-      updatePlayer.role = role === "Admin" ? "Admin" : "User";
+    //if (role && isAdmin)
+      //updatePlayer.role = role === "Admin" ? "Admin" : "User";
     const result = await playersService.updatePlayer(updatePlayer);
     if (!result) {
       res.status(responseCodes.serverError).json({});

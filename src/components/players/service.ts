@@ -64,7 +64,7 @@ const playersService = {
   deletePlayer: async (id: number): Promise<boolean> => {
     try {
       await pool.query(
-        "UPDATE players SET dateDeleted = ? WHERE idplayers = ?",
+        "UPDATE players SET dateDeleted = ? WHERE idplayers = ? AND dateDeleted IS NULL",
         [new Date(), id]
       );
       return true;

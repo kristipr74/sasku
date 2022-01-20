@@ -33,7 +33,7 @@ describe("Results conroller", () => {
       expect(response.body).to.be.a("object");
       expect(response.statusCode).to.equal(401);
       expect(response.body).to.have.key("error");
-      expect(response.body.error).to.equal("No token provide");
+      expect(response.body.error).to.equal("No token provided");
     });
     it("vresponse with code 401 and invalid token", async () => {
       const response = await request(app)

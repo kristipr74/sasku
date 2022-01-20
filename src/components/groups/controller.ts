@@ -20,16 +20,24 @@ const groupsController = {
         error: "Sellise id-ga gruppi ei ole",
       });
     }
-    const groups = await groupsService.getGroupById(id);
-    if (!groups) {
-      return res.status(responseCodes.badRequest).json({
-        error: `Sellise nimega - ${id} - gruppi ei ole!`,
-      });
-    }
     return res.status(responseCodes.ok).json({
-      groups,
+      id,
     });
   },
+
+  /*   //Get group by name controller
+  getGroupByName: async (req: Request, res: Response) => {
+    // const id: number = parseInt(req.params.id, 10);
+    // const group = await groupsService.getGroupByName(id);
+    const groupName: string = req.body;
+    console.log(groupName);
+    if (!groupName) {
+      return res.status(responseCodes.serverError).json({});
+    }
+    return res.status(responseCodes.ok).json({
+      groupName,
+    });
+  }, */
 
   //Create group controller
   createGroup: async (req: Request, res: Response) => {
@@ -59,7 +67,7 @@ const groupsController = {
         error: "Palun sisesta Mänijate nimed",
       });
     }
-    return res.status(responseCodes.ok).json({
+    return res.status(responseCodes.created).json({
       idgroups,
     });
   },

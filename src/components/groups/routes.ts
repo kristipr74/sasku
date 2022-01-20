@@ -8,6 +8,7 @@ const router: Router = express.Router();
 router
   .get("/", isLoggedIn, groupsController.getAllGroups)
   .get("/:id", isLoggedIn, groupsController.getGroupById)
+  //.get("group/:id", isLoggedIn, groupsController.getGroupByName)
   .post("/", isLoggedIn, groupsController.createGroup)
   .delete("/:id", isLoggedIn, groupsController.removeGroup)
   .patch("/:id", isLoggedIn, groupsController.updateGroup);

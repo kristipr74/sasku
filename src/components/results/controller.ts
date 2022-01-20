@@ -18,7 +18,7 @@ const resultsController = {
         error: "Sellise id-ga tulemusi ei ole",
       });
     }
-/*     const result = await resultsService.getResultById(id);
+     const result = await resultsService.getResultById(id);
     if (!result) {
       return res.status(responseCodes.badRequest).json({
         message: `Sellise id-ga - ${id} - tulemusi ei ole!`,
@@ -26,7 +26,7 @@ const resultsController = {
     }
     return res.status(responseCodes.ok).json({
       result,
-    }); */
+    }); 
   },
 
   createResult: async (req: Request, res: Response) => {

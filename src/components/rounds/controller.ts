@@ -21,14 +21,8 @@ const roundsController = {
         error: "Sellise id-ga vooru ei ole",
       });
     }
-    const rounds = await roundsService.getRoundsById(id);
-    if (!rounds) {
-      return res.status(responseCodes.badRequest).json({
-        message: `Sellist - ${id} - vooru ei ole!`,
-      });
-    }
     return res.status(responseCodes.ok).json({
-      rounds,
+      id,
     });
   },
 
