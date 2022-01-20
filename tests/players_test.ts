@@ -11,6 +11,22 @@ const player = {
   email: "kristi@gmail.com",
   password: "kristi",
 };
+ const upPlayer = {
+   id: 5,
+ };
+
+const findPlayer = {
+  id: 1,
+};
+
+const deletePlayer = {
+  id: 100000,
+  wrongId: "abc",
+};
+
+const updatePlayer = {
+  id: 3,
+};
 
 describe("Players conroller", () => {
   describe("GET /players", () => {
@@ -65,29 +81,12 @@ describe("Players conroller", () => {
     it("response with code 200 and found player by ID", async () => {
       const response = await request(app)
         //.get(`/players/${playerID}`)
-        .get(`/players`)
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          idplayers: 1,
-          firstname: "Kristi",
-          lastname: "Pruul",
-          tel: 56158012,
-          email: "kristi@gmail.com",
-          password:
-            "$2b$10$PXaNnUDAxKX44h16s6IFc.DodT5c9SF3Rw4T2LTDbp6xmlCFX6LZe",
-          messenger: null,
-          description: "korraldaja",
-          dateCreated: "2021-11-30T22:00:00.000Z",
-        });
+        .get(`/players/${findPlayer.id}`)
+        .set("Authorization", `Bearer ${token}`);
       expect(response.body).to.be.a("object");
-      //console.log(response.body);
       expect(response.statusCode).to.equal(200);
-      expect(response.body).to.have.key("players");
+      expect(response.body).to.have.key("id");
       expect(response.body.id).to.be.a("number");
-      playerID = response.body.id;
-      //expect(response.body).to.have.key("players");
-
-      //expect(response.body.players).to.be.a("object");
     });
   });
 
@@ -226,52 +225,72 @@ describe("Players conroller", () => {
     });
   });
   describe("DELETE /players/:id", () => {
-    it("respons with code 204 and retur empty object", async () => {
+    it("respons with code 400 and error 'Sellist Mängijat ei eksisteeri'", async () => {
+      const response = await request(app)
+        .delete(`/players/${deletePlayer.wrongId}`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.body).to.be.a("object");
+      expect(response.statusCode).to.equal(400);
+    });
+
+    it("respons with code 204 and return empty object", async () => {
       const response = await request(app)
         .delete(`/players/${playerID}`)
         .set("Authorization", `Bearer ${token}`);
       expect(response.body).to.be.a("object");
       expect(response.statusCode).to.equal(204);
     });
+
+    it("respons with code 400 and return error message 'Sellise  id - ga ${id} Mängijat ei eksisteeri'", async () => {
+      const response = await request(app)
+        .delete(`/players/${deletePlayer.id}`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.body).to.be.a("object");
+      expect(response.statusCode).to.equal(400);
+    });
   });
   describe("UPDATE /players", () => {
     it("respons with code 204 and modify firstname", async () => {
       const response = await request(app)
-        .patch(`/players/${playerID}`)
+        .patch(`/players/${upPlayer.id}`)
         .set("Authorization", `Bearer ${token}`)
         .send({
-          firstName: "Uueke",
-          /*           lastName: "Kuueke",
-          tel: 666666,
-          email: "uueke@gmail.com",
-          password: "uueke",
-          messenger: "uueke.messenger",
-          description: "Uueke kasutaja",
-          role: "Admin", */
+          firstName: "Muu",
         });
       expect(response.body).to.be.a("object");
       console.log(response.body);
       expect(response.statusCode).to.equal(204);
-      expect(response.body).to.be.a("object");
     });
-    it("respons with code 204 and modify firstname", async () => {
+    it("respons with code 400 and modify firstname", async () => {
       const response = await request(app)
-        .patch(`/players/${playerID}`)
+        .patch(`/players/${deletePlayer.wrongId}`)
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.body).to.be.a("object");
+      expect(response.statusCode).to.equal(400);
+    });
+    it("respons with code 400 and error 'Pole midagi uuendada' ", async () => {
+      const response = await request(app)
+        .patch(`/players/${updatePlayer.id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({});
+      expect(response.body).to.be.a("object");
+      expect(response.statusCode).to.equal(400);
+      expect(response.body).to.have.key("error");
+      expect(response.body.error).to.equal("Pole midagi uuendada");
+    });
+    it("respons with code 400 and error 'Sellise  id - ga ${id} Mängijat ei eksisteeri' ", async () => {
+      const response = await request(app)
+        .patch(`/players/${deletePlayer.id}`)
         .set("Authorization", `Bearer ${token}`)
         .send({
           firstName: "Uueke",
-          /*           lastName: "Kuueke",
-          tel: 666666,
-          email: "uueke@gmail.com",
-          password: "uueke",
-          messenger: "uueke.messenger",
-          description: "Uueke kasutaja",
-          role: "Admin", */
         });
       expect(response.body).to.be.a("object");
-      //console.log(response.body);
-      expect(response.statusCode).to.equal(204);
-      expect(response.body).to.be.a("object");
+      expect(response.statusCode).to.equal(400);
+      expect(response.body).to.have.key("error");
+      expect(response.body.error).to.equal(
+        "Sellise  id - ga 100000 Mängijat ei eksisteeri"
+      );
     });
   });
 });

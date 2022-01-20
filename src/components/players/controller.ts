@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import responseCodes from "../../general/responseCodes";
 import playersService from "./service";
 import { INewPlayer, IUpdatePlayer } from "./interface";
+import isAdmin from "../../general/middlewares/isAdmin";
 
 const playersController = {
   //Get player controller
@@ -20,23 +21,16 @@ const playersController = {
         error: "Sellise id-ga Mängijat ei ole",
       });
     }
-/*      if (id === res.locals.players.id || res.locals.players.role === "Admin") {*/
-/*     const player = await playersService.getPlayerById(id);
-    if (!player) {
-      return res.status(responseCodes.badRequest).json({
-        message: `Sellise - ${id} -ga  kasutajat ei ole!`,
-      });
-    }  */
+    // if (id === res.locals.players.id || res.locals.players.role === "Admin") {
     return res.status(responseCodes.ok).json({
-      //player,
       id,
     });
   },
 
-  /*     return res.status(responseCodes.notAuthorized).json({
-      error: "Sul ei ole sellise tegevuse jaoks õigusi",
-    });
-  }, */
+  // return res.status(responseCodes.notAuthorized).json({
+  //   error: "Sul ei ole sellise tegevuse jaoks õigusi",
+  // });
+  // },
 
   //Create player controller
   createPlayer: async (req: Request, res: Response) => {
@@ -103,7 +97,7 @@ const playersController = {
         error: "Sellist Mängijat ei eksisteeri",
       });
     }
-    const player = playersService.getPlayerById(id);
+    const player = await playersService.getPlayerById(id);
     if (!player) {
       return res.status(responseCodes.badRequest).json({
         error: `Sellise  id - ga ${id} Mängijat ei eksisteeri`,
@@ -131,7 +125,7 @@ const playersController = {
     //const isAdmin = res.locals.player.role == "Admin";
     if (!id) {
       return res.status(responseCodes.badRequest).json({
-        error: "Sellise id kasutajat ei ole",
+        error: "Sellise id-ga kasutajat ei ole",
       });
     }
     if (
@@ -142,13 +136,14 @@ const playersController = {
       !password &&
       !messenger &&
       !description
+      //!role
     ) {
       return res.status(responseCodes.badRequest).json({
         error: "Pole midagi uuendada",
       });
     }
 
-    const player = playersService.getPlayerById(id);
+    const player = await playersService.getPlayerById(id);
     if (!player) {
       return res.status(responseCodes.badRequest).json({
         error: `Sellise  id - ga ${id} Mängijat ei eksisteeri`,
@@ -164,7 +159,7 @@ const playersController = {
     if (messenger) updatePlayer.messenger = messenger;
     if (description) updatePlayer.description = description;
     //if (role && isAdmin)
-      //updatePlayer.role = role === "Admin" ? "Admin" : "User";
+    //updatePlayer.role = role === "Admin" ? "Admin" : "User";
     const result = await playersService.updatePlayer(updatePlayer);
     if (!result) {
       res.status(responseCodes.serverError).json({});

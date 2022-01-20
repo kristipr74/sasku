@@ -13,6 +13,10 @@ const player = {
   password: "kristi",
 };
 
+const findGroup = {
+  id: 1,
+};
+
 /* const testGroup = {
   name: "Test grupp",
   description: "Testitavad",
@@ -65,20 +69,12 @@ describe("Groups conroller", () => {
     });
     it("response with code 200 and found groups by ID", async () => {
       const response = await request(app)
-        .get(`/groups/${groupID}`)
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          idgroups: 1,
-          name: "Rock",
-          description: "Allan ja Vardo",
-          dateCreated: "2021-11-30T22:00:00.000Z",
-          dateUpdated: "2022-01-05T07:10:39.000Z"
-        });
+        .get(`/groups/${findGroup.id}`)
+        .set("Authorization", `Bearer ${token}`);
       expect(response.body).to.be.a("object");
       expect(response.statusCode).to.equal(200);
-      expect(response.body).to.have.key("group");
-      expect(response.body.idgroups).to.be.a("number");
-      groupID = response.body.id;
+      expect(response.body).to.have.key("id");
+      expect(response.body.id).to.be.a("number");
     });
   });
 });
