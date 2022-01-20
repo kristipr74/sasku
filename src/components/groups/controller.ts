@@ -25,7 +25,7 @@ const groupsController = {
     });
   },
 
-  /*   //Get group by name controller
+  //Get group by name controller
   getGroupByName: async (req: Request, res: Response) => {
     // const id: number = parseInt(req.params.id, 10);
     // const group = await groupsService.getGroupByName(id);
@@ -37,26 +37,22 @@ const groupsController = {
     return res.status(responseCodes.ok).json({
       groupName,
     });
-  }, */
+  },
 
   //Create group controller
   createGroup: async (req: Request, res: Response) => {
     const { name, description } = req.body;
     //const createdBy = res.locals.players.idplayers;
-    console.log(res.locals.players);
-    if (!name) {
+    //console.log(res.locals.players);
+    /*     if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: "Selline Grupi nimi on juba kasutusel",
       });
-    }
-    const newGroup: INewGroup = {
-      name,
-      description,
-    };
-    const idgroups = await groupsService.createGroup(newGroup);
-    if (!idgroups) {
+    } */
+
+    /*     if (!id) {
       return res.status(responseCodes.serverError).json({});
-    }
+    } */
     if (!name) {
       return res.status(responseCodes.badRequest).json({
         error: "Palun sisesta Grupi nimi",
@@ -67,8 +63,13 @@ const groupsController = {
         error: "Palun sisesta Mänijate nimed",
       });
     }
+    const newGroup: INewGroup = {
+      name,
+      description,
+    };
+    const id = await groupsService.createGroup(newGroup);
     return res.status(responseCodes.created).json({
-      idgroups,
+      id,
     });
   },
 

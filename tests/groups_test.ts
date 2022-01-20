@@ -44,7 +44,7 @@ describe("Groups conroller", () => {
       expect(response.body.error).to.equal("Token is not valid");
     });
 
-    it("response with code 200 ja and return array of groups", async () => {
+    it("response with code 200 and return array of groups", async () => {
       const response = await request(app)
         .get("/groups")
         .set("Authorization", `Bearer ${token}`);
@@ -54,7 +54,7 @@ describe("Groups conroller", () => {
       expect(response.body.groups).to.be.a("array");
       expect(response.body.groups.length).to.greaterThan(0);
     });
-    it("response with code 400 ja and not found groups by ID", async () => {
+    it("response with code 400 and not found groups by ID", async () => {
       const response = await request(app)
         .get(`/groups/${groupID}`)
         .set("Authorization", `Bearer ${token}`);
@@ -63,67 +63,68 @@ describe("Groups conroller", () => {
       expect(response.body).to.have.key("error");
       expect(response.body.error).to.equal("Sellise id-ga gruppi ei ole");
     });
-/*          it("response with code 200 and found groups by ID", async () => {
+    it("response with code 200 and found groups by ID", async () => {
       const response = await request(app)
-        .get(`/groups`)
+        .get(`/groups/${groupID}`)
         .set("Authorization", `Bearer ${token}`)
         .send({
+          idgroups: 1,
           name: "Rock",
+          description: "Allan ja Vardo",
+          dateCreated: "2021-11-30T22:00:00.000Z",
+          dateUpdated: "2022-01-05T07:10:39.000Z"
         });
       expect(response.body).to.be.a("object");
-      //console.log(response.body);
       expect(response.statusCode).to.equal(200);
-      expect(response.body).to.have.key("groups");
-      expect(response.body).to.have.a("number");
-      newGroup = response.body.id;
-    });  */
-
-/*     it("response with code 400 ja and not found groups by name", async () => {
-      const response = await request(app)
-        .get(`/groups/${groupName}`)
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          name: "Rock",
-        });
-      expect(response.body).to.be.a("object");
-      expect(response.statusCode).to.equal(400);
-      expect(response.body).to.have.key("error");
-      expect(response.body.error).to.be.a("string");
-      expect(response.body.error).to.equal("Sellise id-ga gruppi ei ole"); */
+      expect(response.body).to.have.key("group");
+      expect(response.body.idgroups).to.be.a("number");
+      groupID = response.body.id;
     });
   });
-/*   describe("POST / groups", () => {
-    it("response with code 400 and not found groups by name", async () => {
-      const response = await request(app)
-        .get(`/groups/${groupName}`)
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          name: "Rock",
-        });
-      expect(response.body).to.be.a("object");
-      expect(response.statusCode).to.equal(400);
-      expect(response.body).to.have.key("error");
-      expect(response.body.error).to.be.a("string");
-      expect(response.body.error).to.equal(
-        "Selline Grupi nimi on juba kasutusel"
-      );
-    }); */
+});
+describe("POST / groups", () => {
+  it("response with code 400 and error message because missing value 'Palun sisesta Grupi nimi'", async () => {
+    const response = await request(app)
+      .post(`/groups`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        description: "Uus grupp",
+      });
+    expect(response.body).to.be.a("object");
+    expect(response.statusCode).to.equal(400);
+    expect(response.body).to.have.key("error");
+    expect(response.body.error).to.be.a("string");
+    expect(response.body.error).to.equal("Palun sisesta Grupi nimi");
+  });
+  it("response with code 400 and error message because missing value 'Palun sisesta Mänijate nimed'", async () => {
+    const response = await request(app)
+      .post(`/groups`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Uus grupp",
+      });
+    expect(response.body).to.be.a("object");
+    expect(response.statusCode).to.equal(400);
+    expect(response.body).to.have.key("error");
+    expect(response.body.error).to.be.a("string");
+    expect(response.body.error).to.equal("Palun sisesta Mänijate nimed");
+  });
 
-/*         it("respons with code  201 and add new player with ID", async () => {
-      const response = await request(app)
-        .post("/groups")
-        .set("Authorization", `Bearer ${token}`)
-        .send({
-          name: "Test2",
-          description: "new Group",
-        });
-      expect(response.body).to.be.a("object");
-      console.log(response.body);
-      expect(response.statusCode).to.equal(201);
-      expect(response.body).to.have.key("idgroups");
-      expect(response.body.id).to.be.a("number");
-      groupID = response.body.id;
-    }); */
+  it("respons with code  201 and add new player with ID", async () => {
+    const response = await request(app)
+      .post("/groups")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Uus grupp",
+        description: "Uus grupp",
+      });
+    expect(response.body).to.be.a("object");
+    expect(response.statusCode).to.equal(201);
+    expect(response.body).to.have.key("id");
+    expect(response.body.id).to.be.a("number");
+    groupID = response.body.id;
+  });
+});
 
 /*    describe("DELETE /groups/:id", () => {
     it("respons with code 204 and retur empty object", async () => {
@@ -133,5 +134,3 @@ describe("Groups conroller", () => {
       expect(response.statusCode).to.equal(204);
       expect(response.body).to.be.a("object");
     }); */
-
-  

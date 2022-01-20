@@ -51,7 +51,7 @@ const gamesController = {
     }
     if (!location) {
       return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta sarja toimumise koht,"
+        error: "Palun sisesta sarja toimumise koht"
       });
     }
     const newGame: NewGame = { date, type, description, location };

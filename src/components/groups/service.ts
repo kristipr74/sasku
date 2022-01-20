@@ -43,9 +43,12 @@ const groupsService = {
 
   createGroup: async (newGroup: INewGroup): Promise<number | false> => {
     try {
+      const group = {
+        ...newGroup,
+      };
       const [result]: [ResultSetHeader, FieldPacket[]] = await pool.query(
-        "INSERT INTO groups SET name = ?, description = ?",
-        [newGroup.name, newGroup.description]
+        "INSERT INTO groups SET ?",
+        [group]
       );
       return result.insertId;
     } catch (error) {

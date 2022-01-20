@@ -41,7 +41,7 @@ describe("Players conroller", () => {
       expect(response.body.error).to.equal("Token is not valid");
     });
 
-    it("response with code 200 ja and return array", async () => {
+    it("response with code 200 and return array", async () => {
       const response = await request(app)
         .get("/players")
         .set("Authorization", `Bearer ${token}`);
@@ -52,7 +52,7 @@ describe("Players conroller", () => {
       expect(response.body.players.length).to.greaterThan(0);
     });
 
-    it("response with code 400 ja and not found player by ID", async () => {
+    it("response with code 400 and not found player by ID", async () => {
       const response = await request(app)
         .get(`/players/${playerID}`)
         .set("Authorization", `Bearer ${token}`);
@@ -64,14 +64,30 @@ describe("Players conroller", () => {
 
     it("response with code 200 and found player by ID", async () => {
       const response = await request(app)
-        .get(`/players/${playerID}`)
-        .set("Authorization", `Bearer ${token}`);
+        //.get(`/players/${playerID}`)
+        .get(`/players`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          idplayers: 1,
+          firstname: "Kristi",
+          lastname: "Pruul",
+          tel: 56158012,
+          email: "kristi@gmail.com",
+          password:
+            "$2b$10$PXaNnUDAxKX44h16s6IFc.DodT5c9SF3Rw4T2LTDbp6xmlCFX6LZe",
+          messenger: null,
+          description: "korraldaja",
+          dateCreated: "2021-11-30T22:00:00.000Z",
+        });
       expect(response.body).to.be.a("object");
-      console.log(response.body);
+      //console.log(response.body);
       expect(response.statusCode).to.equal(200);
-      expect(response.body).to.have.key("id");
+      expect(response.body).to.have.key("players");
       expect(response.body.id).to.be.a("number");
       playerID = response.body.id;
+      //expect(response.body).to.have.key("players");
+
+      //expect(response.body.players).to.be.a("object");
     });
   });
 
@@ -225,7 +241,7 @@ describe("Players conroller", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({
           firstName: "Uueke",
-/*           lastName: "Kuueke",
+          /*           lastName: "Kuueke",
           tel: 666666,
           email: "uueke@gmail.com",
           password: "uueke",
@@ -244,7 +260,7 @@ describe("Players conroller", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({
           firstName: "Uueke",
-/*           lastName: "Kuueke",
+          /*           lastName: "Kuueke",
           tel: 666666,
           email: "uueke@gmail.com",
           password: "uueke",
@@ -253,7 +269,7 @@ describe("Players conroller", () => {
           role: "Admin", */
         });
       expect(response.body).to.be.a("object");
-      console.log(response.body);
+      //console.log(response.body);
       expect(response.statusCode).to.equal(204);
       expect(response.body).to.be.a("object");
     });

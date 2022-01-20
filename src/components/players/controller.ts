@@ -21,14 +21,15 @@ const playersController = {
       });
     }
 /*      if (id === res.locals.players.id || res.locals.players.role === "Admin") {*/
-    const player = await playersService.getPlayerById(id);
+/*     const player = await playersService.getPlayerById(id);
     if (!player) {
       return res.status(responseCodes.badRequest).json({
         message: `Sellise - ${id} -ga  kasutajat ei ole!`,
       });
-    } 
+    }  */
     return res.status(responseCodes.ok).json({
-      player,
+      //player,
+      id,
     });
   },
 
