@@ -12,6 +12,9 @@ Run project
 API documentation:
 
 	Start project - npm start
+
 	Go to http://localhost:3000/api-docs/
-	Endpoints:
+
+Endpoints:
+
 	/games /groups /players /results /rounds 
