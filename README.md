@@ -2,9 +2,14 @@
 
 ## Saku andmebaasi/database API
 
+You have to download node in your computer
+
+- https://nodejs.org/en/download/
+  Typscript
+
 # Run project
 
-- git cloneh https://github.com/kristipr74/sasku
+- git clone https://github.com/kristipr74/sasku
 - cd sasku
 - npm install
 - npm start
@@ -12,7 +17,10 @@
 
 ## API documentation:
 
+Documentation is mad with ###Swagger
+
 Start project - npm start
+Start test - npm run test
 
 Go to http://localhost:3000/api-docs/
 
