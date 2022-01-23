@@ -4,10 +4,10 @@
 
 # Run project
 
-git clone https://github.com/ahtiirs/Homeworks.git
-cd Homeworks
-npm install
-npm start
+- git cloneh https://github.com/kristipr74/sasku
+- cd sasku
+- npm install
+- npm start
 Go to http://localhost:3000/ping
 
 ## API documentation:
