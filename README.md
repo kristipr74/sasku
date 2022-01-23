@@ -5,7 +5,6 @@
 You have to download node in your computer
 
 - https://nodejs.org/en/download/
-  Typscript
 
 # Run project
 
@@ -15,9 +14,16 @@ You have to download node in your computer
 - npm start
   Go to http://localhost:3000/ping
 
+# HTTP request methods
+
+- GET
+- POST
+- PATCH
+- DELETE
+
 ## API documentation:
 
-Documentation is mad with ###Swagger
+Documentation is mad with Swagger
 
 Start project - npm start
 Start test - npm run test
