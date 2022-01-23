@@ -1,0 +1,353 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Sasku turniiride andmebaas/ tournament database ",
+    "version": "1.0"
+  },
+  "servers": [{ "url": "http://localhost:3000" }],
+  "components": {
+    "schemas": {
+      "id": {
+        "type": "number",
+        "description": "Resource id",
+        "additionalProperties": false,
+        "example": 1
+      },
+      "firstName": {
+        "type": "string",
+        "example": "Kristi"
+      },
+      "lastName": {
+        "type": "string",
+        "example": "Pruul"
+      },
+      "tel": {
+        "type": "number",
+        "example": 555555
+      },
+      "email": {
+        "type": "string",
+        "example": "kristi@gmail.com"
+      },
+      "password": {
+        "type": "string",
+        "example": "kristiPassword"
+      },
+      "messinger": {
+        "type": "string",
+        "example": "kristiMessinger"
+      },
+      "descriptions": {
+        "type": "string",
+        "example": "Player Kristi"
+      },
+      "role": {
+        "type": "string",
+        "example": "Admin"
+      },
+      "description": {
+        "type": "string",
+        "example": "Description of ressourse"
+      },
+      "player": {
+        "type": "object",
+        "description": "Player object",
+        "additionalProperties": false,
+        "properties": {
+          "idplayers": {
+            "$ref": "#/components/schemas/id"
+          },
+          "firstName": {
+            "$ref": "#/components/schemas/firstName"
+          },
+          "lastName": {
+            "$ref": "#/components/schemas/lastName"
+          },
+          "tel": {
+            "$ref": "#/components/schemas/tel"
+          },
+          "email": {
+            "$ref": "#/components/schemas/email"
+          },
+          "password": {
+            "$ref": "#/components/schemas/password"
+          },
+          "messinger": {
+            "$ref": "#/components/schemas/messinger"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "role": {
+            "$ref": "#/components/schemas/role"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/ping": {
+      "get": {
+        "tags": ["Testing API"],
+        "description": "API performance test",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Alive message",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Alive"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players": {
+      "get": {
+        "tags": ["Players operation"],
+        "description": "Get list of all Players",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of Players",
+            "content": {
+              "application/jason": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/player"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Find Player by id",
+          "schema": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      ],
+      "get": {
+        "tags": ["Players operation"],
+        "description": "Get players by id",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Players by ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/id"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Players not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "Sellise id-ga Mängijat ei ole"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/create": {
+      "post": {
+        "tags": ["Players operation"],
+        "description": "Create Player",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Player created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/id"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Add missing value",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Add Player firstname": {
+                    "value": {
+                      "error": "Palun sisesta Mängija eesnimi"
+                    }
+                  },
+                  "Add Player lastname": {
+                    "value": {
+                      "error": "Palun sisesta Mängija perekonnanimi"
+                    }
+                  },
+                  "Add Player telephone number": {
+                    "value": {
+                      "error": "Palun sisesta Mänija telefoninumber"
+                    }
+                  },
+                  "Add Player email address": {
+                    "value": {
+                      "error": "Palun sisesta Mänija meiliaadress"
+                    }
+                  },
+                  "Add password": {
+                    "value": {
+                      "error": "Sisesta palun parool"
+                    }
+                  },
+                  "Add Player description": {
+                    "value": {
+                      "error": "Palun sisesta Mängija kirjeldus"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/delete": {
+      "delete": {
+        "tags": ["Players operation"],
+        "description": "Delete Player by ID",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Delete Player",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/update": {
+      "patch": {
+        "tags": ["Players operation"],
+        "description": "Update Player",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstName": {
+                    "$ref": "#/components/schemas/firstName"
+                  },
+                  "lastName": {
+                    "$ref": "#/components/schemas/lastName"
+                  },
+                  "tel": {
+                    "$ref": "#/components/schemas/tel"
+                  },
+                  "email": {
+                    "$ref": "#/components/schemas/email"
+                  },
+                  "messenger": {
+                    "$ref": "#/components/schemas/messinger"
+                  },
+                  "description": {
+                    "$ref": "#/components/schemas/description"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Player updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Player not found to updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "Player with ID not found": {
+                    "value": {
+                      "error": "Sellise id-ga kasutajat ei ole"
+                    }
+                  },
+                  "Nothing to update": {
+                    "value": {
+                      "error": "Pole midagi uuendada"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

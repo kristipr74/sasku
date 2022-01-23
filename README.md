@@ -1,20 +1,50 @@
-**SAKU ANDMEBAASI/DATABASE API**
-Run project
+# sasku
 
-	git clone https://github.com/kristipr74/sasku
+## Saku andmebaasi/database API
 
-	npm install
+You have to download node in your computer
 
-	npm start
+- https://nodejs.org/en/download/
 
-	Go to http://localhost:3000/ping
+# Run project
 
-API documentation:
+- git clone https://github.com/kristipr74/sasku
+- cd sasku
+- npm install
+- npm start
+  Go to http://localhost:3000/ping
 
-	Start project - npm start
+# HTTP request methods
 
-	Go to http://localhost:3000/api-docs/
+- GET
+- POST
+- PATCH
+- DELETE
 
-Endpoints:
+### Endpoints:
 
-	/games /groups /players /results /rounds 
+- players
+- games
+- groups
+- results
+- rounds
+
+### Respond codes
+
+{
+ok: 200,
+created: 201,
+noContent: 204,
+badRequest: 400,
+notAuthorized: 401,
+notFound: 404,
+}
+
+## API documentation:
+
+Documentation is mad with Swagger
+
+Start project - npm start
+Start test - npm run test
+
+Go to http://localhost:3000/api-docs/

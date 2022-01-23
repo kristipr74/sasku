@@ -1,14 +1,15 @@
 import jwt from "jsonwebtoken";
-import { User } from "../../components/user/interface";
+import { IPlayer } from "../../components/players/interface";
 import config from "../../config";
 
 const jwtService = {
-  sign: async (user: User): Promise<string> => {
+  sign: async (players: IPlayer): Promise<string> => {
     const payload = {
-      id: user.id,
+      id: players.id,
+      role: players.role,
     };
     const token = await jwt.sign(payload, config.jwtSecret, {
-      expiresIn: "1h",
+      expiresIn: "5h",
     });
     return token;
   },
@@ -17,7 +18,7 @@ const jwtService = {
       const playload = await jwt.verify(token, config.jwtSecret);
       return playload;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return false;
     }
   },

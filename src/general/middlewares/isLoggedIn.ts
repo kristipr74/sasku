@@ -1,11 +1,10 @@
-import { json } from "body-parser";
 import { Request, Response, NextFunction } from "express";
-import responseCodes from "../responseCodes";
 import jwtService from "../services/jwtService";
+import responseCodes from "../responseCodes";
 
 const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
-  const authHeaders = req.headers.authorization;
-  const token = authHeaders?.split(" ")[1];
+  const authHeader = req.headers.authorization;
+  const token = authHeader?.split(" ")[1];
   if (token) {
     const payload = await jwtService.verify(token);
     if (!payload) {
@@ -13,10 +12,12 @@ const isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
         error: "Token is not valid",
       });
     }
+
+    res.locals.players = payload;
     return next();
   }
   return res.status(responseCodes.notAuthorized).json({
-    error: "no token provided",
+    error: "No token provided",
   });
 };
 
