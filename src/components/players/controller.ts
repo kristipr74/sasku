@@ -55,7 +55,7 @@ const playersController = {
     }
     if (!tel) {
       return res.status(responseCodes.badRequest).json({
-        error: "Palun sisesta Mänija telefoninumber",
+        error: "Palun sisesta Mängija telefoninumber",
       });
     }
     if (!email) {

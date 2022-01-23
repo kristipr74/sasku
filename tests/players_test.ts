@@ -11,9 +11,9 @@ const player = {
   email: "kristi@gmail.com",
   password: "kristi",
 };
- const upPlayer = {
-   id: 5,
- };
+const upPlayer = {
+  id: 5,
+};
 
 const findPlayer = {
   id: 1,
@@ -165,7 +165,9 @@ describe("Players conroller", () => {
       expect(response.statusCode).to.equal(400);
       expect(response.body).to.have.key("error");
       expect(response.body.error).to.be.a("string");
-      expect(response.body.error).to.equal("Palun sisesta Mänija meiliaadress");
+      expect(response.body.error).to.equal(
+        "Palun sisesta Mängija meiliaadress"
+      );
     });
     it("response with code 400 and error message because missing value 'Sisesta palun parool'", async () => {
       const response = await request(app)

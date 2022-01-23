@@ -1,13 +1,12 @@
 import express, { Application } from "express";
 import swaggerUi from "swagger-ui-express";
+import openapi from "../openapi.json";
 import cors from "cors";
-import openapi from "./openapi.json";
-
 import authController from "./components/auth/Controller";
 
 import pingRouter from "./components/ping/routes";
 import playersRouter from "./components/players/routes";
-import usersRouter from "./components/users/routes";
+//import usersRouter from "./components/users/routes";
 import gamesRouter from "./components/games/routes";
 import groupsRouter from "./components/groups/routes";
 import resultsRouter from "./components/results/routes";
